@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="c60047">#C60047</color>
+    <color name="fb327b">#FB327B</color>
+    <color name="_33363f">#33363F</color>
+
+
+    <!--    Color Background-->
+    <color name="color_01">#000000</color>
+    <color name="color_02">#595959</color>
+    <color name="color_03">#BFBFBF</color>
+    <color name="color_04">#FFFAFA</color>
+    <color name="color_05">#B20000</color>
+    <color name="color_06">#FF0000</color>
+    <color name="color_07">#FF8080</color>
+    <color name="color_08">#FFCCCC</color>
+    <color name="color_09">#B24A00</color>
+    <color name="color_10">#FF6A00</color>
+    <color name="color_11">#FFB580</color>
+    <color name="color_12">#FFE1CC</color>
+    <color name="color_13">#B29500</color>
+    <color name="color_14">#FFD500</color>
+    <color name="color_15">#FFEA80</color>
+    <color name="color_16">#FFF7CC</color>
+    <color name="color_17">#86B200</color>
+    <color name="color_18">#BFFF00</color>
+    <color name="color_19">#DFFF80</color>
+    <color name="color_20">#F2FFCC</color>
+    <color name="color_21">#3CB200</color>
+    <color name="color_22">#55FF00</color>
+    <color name="color_23">#AAFF80</color>
+    <color name="color_24">#DDFFCC</color>
+    <color name="color_25">#00B2A4</color>
+    <color name="color_26">#00FFEA</color>
+    <color name="color_27">#80FFF4</color>
+    <color name="color_28">#CCFFFB</color>
+    <color name="color_29">#0077B2</color>
+    <color name="color_30">#00AAFF</color>
+    <color name="color_31">#80D4FF</color>
+    <color name="color_32">#CCEEFF</color>
+    <color name="color_33">#002DB2</color>
+    <color name="color_34">#0040FF</color>
+    <color name="color_35">#809FFF</color>
+    <color name="color_36">#CCD9FF</color>
+    <color name="color_37">#6800B2</color>
+    <color name="color_38">#9500FF</color>
+    <color name="color_39">#CA80FF</color>
+    <color name="color_40">#EACCFF</color>
+    <color name="color_41">#B200B2</color>
+    <color name="color_42">#FF00FF</color>
+    <color name="color_43">#FF80FF</color>
+    <color name="color_44">#FFCCFF</color>
+    <color name="color_45">#B20059</color>
+    <color name="color_46">#FF0080</color>
+    <color name="color_47">#FF80BF</color>
+    <color name="color_48">#FFCCE5</color>
+    <color name="color_49">#B2001E</color>
+    <color name="color_50">#FF002B</color>
+    <color name="color_51">#FF8095</color>
+    <color name="color_52">#FFCCD4</color>
+    <array name="color_background_array">
+        <item>@color/color_01</item>
+        <item>@color/color_02</item>
+        <item>@color/color_03</item>
+        <item>@color/color_04</item>
+        <item>@color/color_05</item>
+        <item>@color/color_06</item>
+        <item>@color/color_07</item>
+        <item>@color/color_08</item>
+        <item>@color/color_09</item>
+        <item>@color/color_10</item>
+        <item>@color/color_11</item>
+        <item>@color/color_12</item>
+        <item>@color/color_13</item>
+        <item>@color/color_14</item>
+        <item>@color/color_15</item>
+        <item>@color/color_16</item>
+        <item>@color/color_17</item>
+        <item>@color/color_18</item>
+        <item>@color/color_19</item>
+        <item>@color/color_20</item>
+        <item>@color/color_21</item>
+        <item>@color/color_22</item>
+        <item>@color/color_23</item>
+        <item>@color/color_24</item>
+        <item>@color/color_25</item>
+        <item>@color/color_26</item>
+        <item>@color/color_27</item>
+        <item>@color/color_28</item>
+        <item>@color/color_29</item>
+        <item>@color/color_30</item>
+        <item>@color/color_31</item>
+        <item>@color/color_32</item>
+        <item>@color/color_33</item>
+        <item>@color/color_34</item>
+        <item>@color/color_35</item>
+        <item>@color/color_36</item>
+        <item>@color/color_37</item>
+        <item>@color/color_38</item>
+        <item>@color/color_39</item>
+        <item>@color/color_40</item>
+        <item>@color/color_41</item>
+        <item>@color/color_42</item>
+        <item>@color/color_43</item>
+        <item>@color/color_44</item>
+        <item>@color/color_45</item>
+        <item>@color/color_46</item>
+        <item>@color/color_47</item>
+        <item>@color/color_48</item>
+        <item>@color/color_49</item>
+        <item>@color/color_50</item>
+        <item>@color/color_51</item>
+        <item>@color/color_52</item>
+    </array>
+</resources>

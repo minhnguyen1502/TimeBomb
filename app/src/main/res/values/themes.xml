@@ -1,0 +1,15 @@
+<resources>
+    <style name="NoActionBarApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/c60047</item>
+        <item name="colorPrimaryVariant">@color/c60047</item>
+        <item name="colorOnPrimary">@color/c60047</item>
+        <item name="colorPrimaryDark">@color/c60047</item>
+        <item name="colorSecondary">@color/c60047</item>
+        <item name="colorSecondaryVariant">@color/c60047</item>
+        <item name="colorOnSecondary">@color/c60047</item>
+    </style>
+
+    <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>
