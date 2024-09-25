@@ -2,63 +2,54 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="@drawable/bg_home"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/view_top"
-        layout="@layout/tool_bar" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/view_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="back"
+        android:padding="8dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_top" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
-    <LinearLayout
-        android:id="@+id/view_bottom"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/inter_bold"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="Time Bomb Prank"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toStartOf="@id/iv_gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+        app:layout_constraintStart_toEndOf="@id/iv_back"
+        app:layout_constraintTop_toTopOf="@id/iv_back" />
+
+    <ImageView
+        android:id="@+id/iv_gone"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_setting"
+        android:padding="12dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/rl_fragment_a"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:text="Fragment A"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_fragment_b"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginVertical="@dimen/_12sdp"
-                android:text="Fragment B"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp" />
-        </RelativeLayout>
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
