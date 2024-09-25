@@ -31,8 +31,6 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         initData();
         codeLang = Locale.getDefault().getLanguage();
 
-        binding.viewTop.ivBack.setVisibility(View.INVISIBLE);
-        binding.viewTop.tvToolBar.setText(getString(R.string.language));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageStartAdapter languageStartAdapter = new LanguageStartAdapter(listLanguage, code -> codeLang = code, this);
@@ -46,11 +44,11 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
 
     @Override
     public void bindView() {
-        binding.viewTop.ivCheck.setOnClickListener(view -> {
-            SystemUtil.saveLocale(getBaseContext(), codeLang);
-            startNextActivity(IntroActivity.class, null);
-            finishAffinity();
-        });
+//        binding.viewTop.ivCheck.setOnClickListener(view -> {
+//            SystemUtil.saveLocale(getBaseContext(), codeLang);
+//            startNextActivity(IntroActivity.class, null);
+//            finishAffinity();
+//        });
     }
 
     @Override

@@ -41,13 +41,12 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
 
     @Override
     public void bindView() {
-        binding.viewTop.ivCheck.setOnClickListener(view -> {
-            SystemUtil.saveLocale(getBaseContext(), codeLang);
-            startNextActivity(MainActivity.class, null);
-            finishAffinity();
-        });
+//        binding.viewTop.ivCheck.setOnClickListener(view -> {
+//            SystemUtil.saveLocale(getBaseContext(), codeLang);
+//            startNextActivity(MainActivity.class, null);
+//            finishAffinity();
+//        });
 
-        binding.viewTop.ivBack.setOnClickListener(v -> onBack());
     }
 
     @Override

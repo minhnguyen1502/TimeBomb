@@ -1,22 +1,22 @@
 package com.example.timebomb.ui.splash;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.os.Handler;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.timebomb.R;
 import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivitySplashBinding;
-import com.example.timebomb.ui.language.LanguageStartActivity;
 import com.example.timebomb.util.SharePrefUtils;
+
+import pl.droidsonroids.gif.AnimationListener;
+import pl.droidsonroids.gif.GifDrawable;
+
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
@@ -29,7 +29,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     @Override
     public void initView() {
         binding.background.setBackgroundResource(R.drawable.bg_home);
-//        SharePrefUtils.increaseCountOpenApp(this);
+        SharePrefUtils.increaseCountOpenApp(this);
 
         binding.logo.setOnClickListener(v -> {
             ProgressDialog progressDialog = new ProgressDialog(this);
@@ -89,6 +89,29 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
                 animator.start();
             });
+        });
+
+        binding.logo3.setOnClickListener(v -> {
+            binding.gif.setVisibility(View.VISIBLE);
+
+            try {
+                GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.gif_bomb);
+                binding.gif.setImageDrawable(gifDrawable);
+
+                // Phát ảnh GIF chỉ 1 lần
+                gifDrawable.setLoopCount(1);
+                gifDrawable.addAnimationListener(new AnimationListener() {
+                    @Override
+                    public void onAnimationCompleted(int i) {
+                        binding.gif.setVisibility(View.GONE);  // Ẩn ảnh sau khi phát xong
+
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         });
     }
 

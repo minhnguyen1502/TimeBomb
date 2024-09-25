@@ -1,8 +1,14 @@
 package com.example.timebomb.ui.intro;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.timebomb.R;
@@ -15,6 +21,8 @@ import com.example.timebomb.util.SharePrefUtils;
 public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     ImageView[] dots = null;
     IntroAdapter introAdapter;
+    String[] content;
+    ViewPager viewPager;
 
     @Override
     public ActivityIntroBinding getBinding() {
@@ -23,13 +31,17 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
     @Override
     public void initView() {
+        viewPager = binding.viewPager2;
+
+        content = new String[]{"", "", ""};
+
         dots = new ImageView[]{binding.ivCircle01, binding.ivCircle02, binding.ivCircle03};
 
         introAdapter = new IntroAdapter(this);
 
-        binding.viewPager2.setAdapter(introAdapter);
+        viewPager.setAdapter(introAdapter);
 
-        binding.viewPager2.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -48,9 +60,17 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
     @Override
     public void bindView() {
-        binding.btnNext.setOnClickListener(view -> binding.viewPager2.setCurrentItem(binding.viewPager2.getCurrentItem() + 1));
+        binding.btnNext.setOnClickListener(view -> {
+            if (viewPager.getCurrentItem() == 0) {
+            } else if (viewPager.getCurrentItem() == 1) {
+            }
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        });
 
-        binding.btnStart.setOnClickListener(view -> goToNextScreen());
+        binding.btnStart.setOnClickListener(view -> {
+
+            goToNextScreen();
+        });
     }
 
     @Override
@@ -59,18 +79,24 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     private void changeContentInit(int position) {
+        binding.tvContent.setText(content[position]);
+
         for (int i = 0; i < 3; i++) {
-            if (i == position) dots[i].setImageResource(R.drawable.ic_intro_s);
-            else dots[i].setImageResource(R.drawable.ic_intro_sn);
+            if (i == position) dots[i].setImageResource(R.drawable.ic_intro_sn);
+            else dots[i].setImageResource(R.drawable.ic_intro_s);
         }
 
         switch (position) {
             case 0:
+
+                binding.viewBottom.setGravity(Gravity.CENTER);
             case 1:
+
                 binding.btnNext.setVisibility(View.VISIBLE);
                 binding.btnStart.setVisibility(View.GONE);
                 break;
             case 2:
+
                 binding.btnNext.setVisibility(View.GONE);
                 binding.btnStart.setVisibility(View.VISIBLE);
                 break;
@@ -78,16 +104,30 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     public void goToNextScreen() {
-        if (SharePrefUtils.getCountOpenApp(this) > 1) {
-            startNextActivity(MainActivity.class, null);
+        if(checkMediaPermission ()){
+            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(IntroActivity.this, PermissionActivity.class);
+            startActivity(intent);
+
+        }
+    }
+
+    private boolean checkMediaPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
         } else {
-            startNextActivity(PermissionActivity.class, null);
+            // For Android versions below 13, check the legacy permission
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        changeContentInit(binding.viewPager2.getCurrentItem());
+        changeContentInit(viewPager.getCurrentItem());
     }
 }

@@ -17,22 +17,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
-        binding.viewTop.tvToolBar.setText("MainActivity");
-        binding.viewTop.ivCheck.setVisibility(View.INVISIBLE);
 
-        binding.viewPager.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
-        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager(), getLifecycle());
-        binding.viewPager.setAdapter(mainAdapter);
-        binding.viewPager.setUserInputEnabled(false);
     }
 
     @Override
     public void bindView() {
-        binding.viewTop.ivBack.setOnClickListener(v -> onBack());
 
-        binding.rlFragmentA.setOnClickListener(view -> setPage(view, 0));
-
-        binding.rlFragmentB.setOnClickListener(view -> setPage(view, 1));
     }
 
     @Override
@@ -40,18 +30,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         finishThisActivity();
     }
 
-    public void setPage(View view, int pos){
-        binding.viewPager.setCurrentItem(pos, false);
-
-        switch (pos){
-            case 0:
-
-                break;
-
-            case 1:
-
-                break;
-        }
-
-    }
 }

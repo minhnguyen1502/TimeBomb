@@ -7,6 +7,7 @@ public class SPUtils {
     public static final String PREFERENCE = "PREFERENCE";
     public static final String SHARED_PREFS_NAME = "SHARED_PREFS_NAME";
     public static final String STORAGE = "STORAGE";
+    public static final String MEDIA = "MEDIA";
 
 
     public static SharedPreferences getPref(Context context) {

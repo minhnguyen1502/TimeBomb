@@ -128,11 +128,6 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
     protected void onResume() {
         super.onResume();
         //tắt ads resume all
-//        if (ConstantRemote.appopen_resume) {
-//            AppOpenManager.getInstance().enableAppResumeWithActivity(getClass());
-//        } else {
-//            AppOpenManager.getInstance().disableAppResumeWithActivity(getClass());
-//        }
     }
 
     public void hideNavigation() {

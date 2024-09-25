@@ -46,13 +46,10 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
             return;
         }
 
-        holder.rdbCheck.setVisibility(View.GONE);
         holder.tvLang.setText(languageModel.getName());
 
         if (languageModel.getActive()) {
-            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_s);
         } else {
-            holder.layoutItem.setBackgroundResource(R.drawable.bg_lang_item_sn);
         }
 
         switch (languageModel.getCode()) {
@@ -82,11 +79,11 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
                 break;
         }
 
-        holder.layoutItem.setOnClickListener(v -> {
-            setCheck(languageModel.getCode());
-            iClickItemLanguage.onClickItemLanguage(languageModel.getCode());
-            notifyDataSetChanged();
-        });
+//        holder.layoutItem.setOnClickListener(v -> {
+//            setCheck(languageModel.getCode());
+//            iClickItemLanguage.onClickItemLanguage(languageModel.getCode());
+//            notifyDataSetChanged();
+//        });
 
     }
 
@@ -100,17 +97,13 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
     }
 
     public static class LanguageViewHolder extends RecyclerView.ViewHolder {
-        private final RadioButton rdbCheck;
         private final TextView tvLang;
-        private final LinearLayout layoutItem;
         private final ImageView icLang;
 
         public LanguageViewHolder(@NonNull View itemView) {
             super(itemView);
-            rdbCheck = itemView.findViewById(R.id.rdbCheck);
             icLang = itemView.findViewById(R.id.icLang);
             tvLang = itemView.findViewById(R.id.tvLang);
-            layoutItem = itemView.findViewById(R.id.layoutItem);
         }
     }
 
