@@ -42,5 +42,11 @@
     <string name="title_dialog_per">Grant these permissions to use <b>"Funny Sound App - Prank Sound"</b>></string>
     <string name="content_dialog_per">Note: You can also grant permission in <b>Settings -> Apps -> Funny Sound App - Prank Sound ->  Storage Access </b></string>
     <string name="u_privacy_policy"><u>Privacy Policy</u></string>
+    <string name="time_bomb">Time Bomb</string>
+    <string name="taser_gun">"Taser Gun "</string>
+    <string name="light_saber">Light Saber</string>
+    <string name="chainsaw">Chainsaw</string>
+    <string name="flame_thrower">Flame thrower</string>
+    <string name="crack_screen">Crack Screen</string>
 
 </resources>

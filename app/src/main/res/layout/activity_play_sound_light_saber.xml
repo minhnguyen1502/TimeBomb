@@ -89,7 +89,7 @@
     <ImageView
         android:id="@+id/imgSaber"
         android:layout_width="30dp"
-        android:layout_height="370dp"
+        android:layout_height="400dp"
         android:layout_centerInParent="true"
         android:src="@drawable/img_light_saber_6_1"
         android:layout_marginBottom="-430dp"
@@ -100,7 +100,7 @@
         android:id="@+id/img"
         android:layout_width="30dp"
         android:layout_height="600dp"
-        android:src="@drawable/img_light_saber_8_2"
+        android:src="@drawable/img_light_saber_1_2"
         android:layout_marginBottom="90dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

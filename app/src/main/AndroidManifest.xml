@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
     <application
@@ -18,41 +19,56 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
+            android:name=".ui.sound.TaserActivity"
+            android:exported="false" />
         <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:name=".ui.sound.SaberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.sound.FlameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.sound.ChainsawActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.sound.CrackScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.sound.BombActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.sound.SoundActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.language.LanguageStartActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.intro.IntroActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.language.LanguageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.permission.PermissionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
 
         <service
             android:name=".service.MyFirebaseMessagingService"
@@ -65,7 +81,6 @@
                 <category android:name="android.intent.category.OPENABLE" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

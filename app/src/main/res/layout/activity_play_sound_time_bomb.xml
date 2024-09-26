@@ -91,11 +91,16 @@
             app:layout_constraintBottom_toTopOf="@id/btn_start"
             app:layout_constraintStart_toEndOf="@id/btn_start"/>
 
-        <com.example.timebomb.base.StrokeTextView
+        <com.example.timebomb.base.CustomTextView
+            android:fontFeatureSettings="tnum=on"
+            android:includeFontPadding="false"
+            android:id="@+id/time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/btn_minus"
             app:layout_constraintEnd_toStartOf="@id/btn_plus"
+            android:paddingVertical="9dp"
+            android:layout_marginHorizontal="26dp"
             android:text="00:00"
             android:gravity="center"
             android:fontFamily="@font/inter_bold"
@@ -119,6 +124,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

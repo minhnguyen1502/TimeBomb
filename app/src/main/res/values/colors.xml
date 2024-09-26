@@ -115,4 +115,5 @@
         <item>@color/color_51</item>
         <item>@color/color_52</item>
     </array>
+    <string name="db0202">#DB0202</string>
 </resources>
