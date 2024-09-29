@@ -34,7 +34,7 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundHolder>
     public void onBindViewHolder(@NonNull SoundHolder holder, int position) {
         SoundModel soundModel = soundLists.get(position);
         holder.binding.img.setImageResource(soundModel.getImg());
-        holder.itemView.setOnClickListener(v -> clickItem.clickItem(position));
+        holder.itemView.setOnClickListener(v -> clickItem.clickItem(position, soundModel));
 
     }
 
@@ -57,6 +57,6 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundHolder>
     }
 
     public interface ClickItem {
-        void clickItem(int position);
+        void clickItem(int position, SoundModel soundModel);
     }
 }

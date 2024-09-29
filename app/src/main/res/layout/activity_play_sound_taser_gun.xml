@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_02"
+    android:id="@id/background"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_back"
@@ -27,16 +28,16 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="@string/about"
-        android:textColor="@color/black"
+        android:text="Taser Gun"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintEnd_toStartOf="@id/background"
+        app:layout_constraintEnd_toStartOf="@id/iv_background"
         app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/iv_background"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -54,8 +55,8 @@
         android:src="@drawable/ic_n_select"
         android:padding="12dp"
         android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
-        app:layout_constraintTop_toBottomOf="@id/background"/>
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
+        app:layout_constraintTop_toBottomOf="@id/iv_background"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
         android:src="@drawable/ic_select"
         android:padding="12dp"
         android:layout_marginTop="-8dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
         app:layout_constraintTop_toBottomOf="@id/ic_hold"/>
     <TextView
         android:layout_width="wrap_content"
@@ -105,11 +106,48 @@
         android:textColor="@color/white"/>
 
     <ImageView
+        android:id="@+id/img"
         android:layout_width="200dp"
         android:layout_height="450dp"
         android:layout_marginBottom="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/img_taser_gun_6"/>
+        android:src="@drawable/img_taser_gun_8"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/img_anim"
+        android:layout_width="130dp"
+        android:layout_height="600dp"
+        android:layout_marginBottom="-300dp"
+        android:visibility="invisible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintBottom_toTopOf="@id/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_fileName="elec.json" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/img_anim2"
+        android:layout_width="130dp"
+        android:layout_height="650dp"
+        android:layout_marginStart="-130dp"
+        android:layout_marginBottom="-300dp"
+        android:rotation="90"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintBottom_toTopOf="@id/img2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_fileName="elec.json" />
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="200dp"
+        android:layout_height="350dp"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/img_taser_gun_play_1"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

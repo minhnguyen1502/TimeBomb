@@ -36,13 +36,13 @@
         android:text="Time Bomb Prank"
         android:textColor="@color/white"
         android:textSize="26sp"
-        app:layout_constraintEnd_toStartOf="@id/iv_gone"
+        app:layout_constraintEnd_toStartOf="@id/iv_setting"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <ImageView
-        android:id="@+id/iv_gone"
+        android:id="@+id/iv_setting"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"

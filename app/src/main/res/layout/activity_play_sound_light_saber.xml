@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_04"
+    android:id="@id/background"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_back"
@@ -27,16 +28,16 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="@string/about"
+        android:text="Light Saber"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintEnd_toStartOf="@id/background"
+        app:layout_constraintEnd_toStartOf="@id/iv_background"
         app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/iv_background"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -54,8 +55,8 @@
         android:src="@drawable/ic_n_select"
         android:padding="12dp"
         android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
-        app:layout_constraintTop_toBottomOf="@id/background"/>
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
+        app:layout_constraintTop_toBottomOf="@id/iv_background"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,39 +68,41 @@
         android:textColor="@color/white"/>
 
     <ImageView
-        android:id="@+id/ic_single"
+        android:id="@+id/ic_touch"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_select"
+        android:src="@drawable/ic_n_select"
         android:padding="12dp"
         android:layout_marginTop="-8dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
         app:layout_constraintTop_toBottomOf="@id/ic_hold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Touch"
-        app:layout_constraintTop_toTopOf="@id/ic_single"
-        app:layout_constraintBottom_toBottomOf="@id/ic_single"
-        app:layout_constraintEnd_toStartOf="@id/ic_single"
+        app:layout_constraintTop_toTopOf="@id/ic_touch"
+        app:layout_constraintBottom_toBottomOf="@id/ic_touch"
+        app:layout_constraintEnd_toStartOf="@id/ic_touch"
         android:layout_marginEnd="-4dp"
         android:textColor="@color/white"/>
 
 
     <ImageView
-        android:id="@+id/imgSaber"
+        android:id="@+id/img1"
         android:layout_width="30dp"
         android:layout_height="400dp"
         android:layout_centerInParent="true"
+        android:visibility="invisible"
         android:src="@drawable/img_light_saber_6_1"
         android:layout_marginBottom="-430dp"
-        app:layout_constraintBottom_toTopOf="@id/img"
-        app:layout_constraintEnd_toEndOf="@id/img"
-        app:layout_constraintStart_toStartOf="@id/img" />
+        app:layout_constraintBottom_toTopOf="@id/img2"
+        app:layout_constraintEnd_toEndOf="@id/img2"
+        app:layout_constraintStart_toStartOf="@id/img2" />
     <ImageView
-        android:id="@+id/img"
-        android:layout_width="30dp"
+        android:id="@+id/img2"
+        android:layout_width="48dp"
         android:layout_height="600dp"
+        android:paddingHorizontal="9dp"
         android:src="@drawable/img_light_saber_1_2"
         android:layout_marginBottom="90dp"
         app:layout_constraintStart_toStartOf="parent"

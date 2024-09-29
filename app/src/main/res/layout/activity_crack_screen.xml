@@ -28,7 +28,7 @@
         android:lines="1"
         android:maxLines="1"
         android:text="Crack Screen"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toStartOf="@id/background"

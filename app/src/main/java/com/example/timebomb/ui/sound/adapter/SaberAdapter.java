@@ -35,7 +35,7 @@ public class SaberAdapter extends RecyclerView.Adapter<SaberAdapter.SaberHolder>
     public void onBindViewHolder(@NonNull SaberHolder holder, int position) {
         Saber saber = saberList.get(position);
         holder.binding.img.setImageResource(saber.getImg());
-        holder.itemView.setOnClickListener(v -> clickItem.clickItem(position));
+        holder.itemView.setOnClickListener(v -> clickItem.clickItem(position, saber));
 
     }
 
@@ -58,6 +58,6 @@ public class SaberAdapter extends RecyclerView.Adapter<SaberAdapter.SaberHolder>
     }
 
     public interface ClickItem {
-        void clickItem(int position);
+        void clickItem(int position, Saber saber);
     }
 }

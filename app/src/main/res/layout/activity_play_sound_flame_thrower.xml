@@ -4,20 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_02"
+    android:id="@+id/background"
     android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/img"
         android:layout_width="430dp"
-        android:layout_height="600dp"
+        android:layout_height="580dp"
         android:src="@drawable/img_flame_thrower_play_8"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/img_anim"
         android:layout_width="600dp"
         android:layout_height="600dp"
         android:layout_marginBottom="-100dp"
+        android:visibility="invisible"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
         app:layout_constraintBottom_toTopOf="@id/img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,16 +51,16 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Flame thrower"
-        android:textColor="@color/black"
+        android:text="Flamethrower"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintEnd_toStartOf="@id/background"
+        app:layout_constraintEnd_toStartOf="@id/iv_background"
         app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/iv_background"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
@@ -71,8 +78,8 @@
         android:src="@drawable/ic_n_select"
         android:padding="12dp"
         android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
-        app:layout_constraintTop_toBottomOf="@id/background"/>
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
+        app:layout_constraintTop_toBottomOf="@id/iv_background"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,21 +91,21 @@
         android:textColor="@color/white"/>
 
     <ImageView
-        android:id="@+id/ic_single"
+        android:id="@+id/ic_touch"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_select"
+        android:src="@drawable/ic_n_select"
         android:padding="12dp"
         android:layout_marginTop="-8dp"
-        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintEnd_toEndOf="@id/iv_background"
         app:layout_constraintTop_toBottomOf="@id/ic_hold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Touch"
-        app:layout_constraintTop_toTopOf="@id/ic_single"
-        app:layout_constraintBottom_toBottomOf="@id/ic_single"
-        app:layout_constraintEnd_toStartOf="@id/ic_single"
+        app:layout_constraintTop_toTopOf="@id/ic_touch"
+        app:layout_constraintBottom_toBottomOf="@id/ic_touch"
+        app:layout_constraintEnd_toStartOf="@id/ic_touch"
         android:layout_marginEnd="-4dp"
         android:textColor="@color/white"/>
 

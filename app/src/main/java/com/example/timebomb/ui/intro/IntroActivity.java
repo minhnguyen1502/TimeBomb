@@ -33,7 +33,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     public void initView() {
         viewPager = binding.viewPager2;
 
-        content = new String[]{"", "", ""};
+        content = new String[]{"Surprise & Shock With Explosive Sounds", "Choose Your Warzone Background", "Many Unique Bomb Sound To Prank"};
 
         dots = new ImageView[]{binding.ivCircle01, binding.ivCircle02, binding.ivCircle03};
 
@@ -82,8 +82,8 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
         binding.tvContent.setText(content[position]);
 
         for (int i = 0; i < 3; i++) {
-            if (i == position) dots[i].setImageResource(R.drawable.ic_intro_sn);
-            else dots[i].setImageResource(R.drawable.ic_intro_s);
+            if (i == position) dots[i].setImageResource(R.drawable.ic_intro_s);
+            else dots[i].setImageResource(R.drawable.ic_intro_sn);
         }
 
         switch (position) {

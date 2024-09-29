@@ -27,9 +27,6 @@ import com.example.timebomb.util.SPUtils;
 public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> {
 
 
-    private final int REQUEST_CODE_MEDIA_PERMISSION = 128;
-    private int countMedia = 0;
-
     @Override
     public ActivityPermissionBinding getBinding() {
         return ActivityPermissionBinding.inflate(getLayoutInflater());
@@ -37,53 +34,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
     @Override
     public void initView() {
-        countMedia = SPUtils.getInt(this, SPUtils.MEDIA, 0);
 
-    }
-
-    private boolean checkMediaPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
-            }
-            return false;
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void checkSwMedia() {
-
-        if (checkMediaPermission()) {
-            binding.swNoti.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.img_switch_s));
-        } else {
-            binding.swNoti.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.img_switch_ns));
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CODE_MEDIA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                checkSwMedia();
-            }
-
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                checkSwMedia();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!shouldShowRequestPermissionRationale(permissions[0])) {
-                        countMedia++;
-                        SPUtils.setInt(this, SPUtils.MEDIA, countMedia);
-                        if (countMedia > 1) {
-                            showDialogGotoSetting();
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private void showDialogGotoSetting() {
@@ -117,7 +68,6 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
     @Override
     protected void onResume() {
         super.onResume();
-        checkSwMedia();
 
     }
 
@@ -128,17 +78,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
             startNextActivity(MainActivity.class, null);
             finishAffinity();
         });
-
-        binding.swNoti.setOnClickListener(view -> {
-
-            if (!checkMediaPermission()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE_MEDIA_PERMISSION);
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_MEDIA_PERMISSION);
-                }
-            }
-        });
+        
     }
 
     @Override

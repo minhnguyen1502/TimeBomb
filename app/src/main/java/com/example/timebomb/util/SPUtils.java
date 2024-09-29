@@ -8,6 +8,10 @@ public class SPUtils {
     public static final String SHARED_PREFS_NAME = "SHARED_PREFS_NAME";
     public static final String STORAGE = "STORAGE";
     public static final String MEDIA = "MEDIA";
+    public static final String IS_VIBRATE = "IS_VIBRATE";
+    public static final String IS_SOUND = "IS_SOUND";
+    public static final String IS_FLASH = "IS_FLASH";
+    public static final String BG = "BG";
 
 
     public static SharedPreferences getPref(Context context) {

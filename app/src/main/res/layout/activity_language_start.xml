@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_04"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_back"
@@ -12,7 +13,6 @@
         android:layout_marginTop="4dp"
         android:contentDescription="back"
         android:padding="8dp"
-        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
@@ -21,31 +21,27 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="-5dp"
-        android:layout_marginBottom="-8dp"
         android:ellipsize="end"
         android:gravity="center"
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
         android:text="Language"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintEnd_toStartOf="@id/favorite"
+        app:layout_constraintEnd_toStartOf="@id/iv_check"
         app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <ImageView
-        android:id="@+id/favorite"
+        android:id="@+id/iv_check"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:clickable="false"
-        android:focusable="false"
         android:padding="10dp"
-        android:visibility="invisible"
+        android:src="@drawable/iv_check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />

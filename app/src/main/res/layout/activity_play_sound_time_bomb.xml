@@ -15,7 +15,7 @@
         android:layout_marginTop="4dp"
         android:contentDescription="back"
         android:padding="8dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
@@ -29,7 +29,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="@string/about"
+        android:text="Time Bomb"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
@@ -52,6 +52,7 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
+        android:id="@+id/iv_img"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"

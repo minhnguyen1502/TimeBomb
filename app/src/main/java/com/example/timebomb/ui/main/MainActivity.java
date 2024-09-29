@@ -17,6 +17,7 @@ import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityMainBinding;
 import com.example.timebomb.ui.main.adapter.ItemAdapter;
 import com.example.timebomb.ui.main.model.ItemModel;
+import com.example.timebomb.ui.setting.SettingActivity;
 import com.example.timebomb.ui.sound.SoundActivity;
 
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void bindView() {
+        binding.ivSetting.setOnClickListener(v -> startActivity(new Intent(this, SettingActivity.class)));
 
     }
 

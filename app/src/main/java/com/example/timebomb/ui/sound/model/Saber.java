@@ -13,6 +13,22 @@ public class Saber {
         this.sound = sound;
     }
 
+    public int getImg_play_2() {
+        return img_play_2;
+    }
+
+    public void setImg_play_2(int img_play_2) {
+        this.img_play_2 = img_play_2;
+    }
+
+    public int getImg_play_1() {
+        return img_play_1;
+    }
+
+    public void setImg_play_1(int img_play_1) {
+        this.img_play_1 = img_play_1;
+    }
+
     public int getImg() {
         return img;
     }

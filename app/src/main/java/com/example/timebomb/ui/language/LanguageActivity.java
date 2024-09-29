@@ -1,5 +1,7 @@
 package com.example.timebomb.ui.language;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.timebomb.R;
@@ -31,38 +33,38 @@ public class LanguageActivity extends BaseActivity<ActivityLanguageBinding> {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageAdapter languageAdapter = new LanguageAdapter(listLanguage, code -> codeLang = code, this);
-
-
         languageAdapter.setCheck(SystemUtil.getPreLanguage(getBaseContext()));
 
         binding.rcvLang.setLayoutManager(linearLayoutManager);
         binding.rcvLang.setAdapter(languageAdapter);
+        binding.ivChoose.setOnClickListener(view -> {
+            SystemUtil.saveLocale(getBaseContext(), codeLang);
+            startActivity(new Intent(LanguageActivity.this, MainActivity.class));
+            finishAffinity();
+        });
+        binding.ivBack.setOnClickListener(v -> onBack());
     }
 
     @Override
     public void bindView() {
-//        binding.viewTop.ivCheck.setOnClickListener(view -> {
-//            SystemUtil.saveLocale(getBaseContext(), codeLang);
-//            startNextActivity(MainActivity.class, null);
-//            finishAffinity();
-//        });
 
     }
 
     @Override
     public void onBack() {
-        finishThisActivity();
+        finish();
     }
 
     private void initData() {
         listLanguage = new ArrayList<>();
-        listLanguage.add(new LanguageModel("Chinese", "zh"));
         listLanguage.add(new LanguageModel("English", "en"));
+        listLanguage.add(new LanguageModel("China", "zh"));
         listLanguage.add(new LanguageModel("French", "fr"));
         listLanguage.add(new LanguageModel("German", "de"));
         listLanguage.add(new LanguageModel("Hindi", "hi"));
-        listLanguage.add(new LanguageModel("Indonesian", "in"));
+        listLanguage.add(new LanguageModel("Indonesia", "in"));
         listLanguage.add(new LanguageModel("Portuguese", "pt"));
         listLanguage.add(new LanguageModel("Spanish", "es"));
     }
+
 }

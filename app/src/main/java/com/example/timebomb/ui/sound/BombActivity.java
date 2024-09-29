@@ -1,12 +1,21 @@
 package com.example.timebomb.ui.sound;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.timebomb.R;
 import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityPlaySoundTimeBombBinding;
+import com.example.timebomb.util.SPUtils;
 
 import pl.droidsonroids.gif.AnimationListener;
 import pl.droidsonroids.gif.GifDrawable;
@@ -14,10 +23,13 @@ import pl.droidsonroids.gif.GifDrawable;
 public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>{
     private int minutes = 0;
     private int seconds = 0;
-    private final int MAX_TIME = 10 * 60; // 10:00 in seconds
+    private final int MAX_TIME = 10 * 60;
     private final int MIN_TIME = 0;
     private CountDownTimer countDownTimer;
     private boolean isCountingDown = false;
+    private int img, sound;
+    private MediaPlayer mediaPlayer;
+    boolean isVibrate, isSound, isFlash;
 
     @Override
     public ActivityPlaySoundTimeBombBinding getBinding() {
@@ -26,6 +38,25 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     @Override
     public void initView() {
+        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, false);
+        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
+        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
+        Intent i = getIntent();
+        img = i.getIntExtra("img", -1);
+        sound = i.getIntExtra("sound", -1);
+        if (img != -1) {
+            binding.ivImg.setImageResource(img);
+        } else {
+            binding.ivImg.setVisibility(View.INVISIBLE);
+        }
+        if (sound != -1) {
+            mediaPlayer = MediaPlayer.create(this, sound);
+            mediaPlayer.setOnCompletionListener(mp -> {
+                    stopVibrate();
+            });
+        } else {
+            Toast.makeText(this, "No sound", Toast.LENGTH_SHORT).show();
+        }
         updateTimeDisplay();
     }
 
@@ -34,6 +65,8 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
         binding.btnPlus.setOnClickListener(v -> increaseTime());
         binding.btnMinus.setOnClickListener(v -> decreaseTime());
         binding.btnStart.setOnClickListener(v -> startCountdown());
+        binding.ivBack.setOnClickListener(v -> onBack());
+
     }
     private void increaseTime() {
         int currentTimeInSeconds = minutes * 60 + seconds;
@@ -56,7 +89,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     }
 
     private void updateTimeDisplay() {
-        String time = String.format("%02d:%02d", minutes, seconds);
+        @SuppressLint("DefaultLocale") String time = String.format("%02d:%02d", minutes, seconds);
         binding.time.setText(time);
 
         int currentTimeInSeconds = minutes * 60 + seconds;
@@ -82,6 +115,13 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     private void bomb(){
         binding.gif.setVisibility(View.VISIBLE);
         try {
+            if (isSound){
+                playSound();
+            }
+            if (isVibrate){
+                startVibrate();
+            }
+
             GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.gif_bomb);
             binding.gif.setImageDrawable(gifDrawable);
             gifDrawable.setLoopCount(1);
@@ -89,7 +129,8 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
                 @Override
                 public void onAnimationCompleted(int i) {
                     binding.gif.setVisibility(View.GONE);
-
+                    stopSound();
+                    stopVibrate();
                 }
             });
 
@@ -98,7 +139,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
         }
     }
     private void startCountdown() {
-        if (isCountingDown) return;  // Prevent multiple timers
+        if (isCountingDown) return;
 
         int totalTimeInSeconds = minutes * 60 + seconds;
         if (totalTimeInSeconds > 0) {
@@ -134,11 +175,51 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
             }.start();
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    private void playSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void stopSound() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            mediaPlayer.seekTo(0);
+        }
+
+    }
+    public void stopVibrate(){
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
+    }
+
+    public void startVibrate(){
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                long[] pattern = {0, 500, 500};
+                vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
+            }
+        }
+    }
     @Override
     public void onBack() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         finish();
+    }
+    @Override
+    protected void onDestroy() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        super.onDestroy();
     }
 }

@@ -22,6 +22,7 @@ public class CrackScreenActivity extends BaseActivity<ActivityCrackScreenBinding
 
     @Override
     public void initView() {
+        binding.ivBack.setOnClickListener(v -> onBack());
 
     }
 
@@ -32,6 +33,6 @@ public class CrackScreenActivity extends BaseActivity<ActivityCrackScreenBinding
 
     @Override
     public void onBack() {
-
+        finish();
     }
 }
