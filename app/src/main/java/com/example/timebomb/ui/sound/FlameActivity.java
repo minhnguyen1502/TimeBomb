@@ -132,7 +132,7 @@ public class FlameActivity extends BaseActivity<ActivityPlaySoundFlameThrowerBin
                 if (isFlash){
                     startFlash();
                 }
-                binding.imgAnim.setVisibility(View.INVISIBLE);
+                binding.imgAnim.setVisibility(View.VISIBLE);
             }
         });
 

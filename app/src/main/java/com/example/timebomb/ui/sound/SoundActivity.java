@@ -47,6 +47,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
         if (type != null) {
             switch (type) {
                 case "bomb":
+                    binding.title.setText("Time Bomb");
                     binding.rcvSound.setAdapter(new SoundAdapter(bomb, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, BombActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
@@ -55,6 +56,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "taser":
+                    binding.title.setText("Taser Gun");
+
                     binding.rcvSound.setAdapter(new SoundAdapter(taser, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, TaserActivity.class);
                         i1.putExtra("position", position);
@@ -64,6 +67,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "chainsaw":
+                    binding.title.setText("Chainsaw");
+
                     binding.rcvSound.setAdapter(new SoundAdapter(chainsaw, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, ChainsawActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
@@ -72,6 +77,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "flame":
+                    binding.title.setText("Flamethrower");
+
                     binding.rcvSound.setAdapter(new SoundAdapter(flame, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, FlameActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
@@ -80,6 +87,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "crack":
+                    binding.title.setText("Crack Screen");
+
                     binding.rcvSound.setAdapter(new SoundAdapter(screen, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, CrackScreenActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
@@ -88,6 +97,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "saber":
+                    binding.title.setText("Light Saber");
+
                     binding.rcvSound.setAdapter(new SaberAdapter(saber, this, (position, saber) -> {
                         Intent i1 = new Intent(this, SaberActivity.class);
                         i1.putExtra("img_1", saber.getImg_play_1());
