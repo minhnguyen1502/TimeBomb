@@ -1,6 +1,10 @@
 package com.example.timebomb.ui.sound.service;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,32 +18,41 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
 
 import com.example.timebomb.R;
 
 public class CrackScreen extends Service {
+    private static final int NOTIFICATION_ID = 1;
+    private static final String CHANNEL_ID = "CrackScreenChannel";
+
     private ImageView mImage;
     private View overlayView;
     private int imageResId;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
+
     @Override
     public IBinder onBind(Intent paramIntent) {
         return null;
     }
 
-    @SuppressLint("WrongConstant")
     @Override
     public void onCreate() {
         super.onCreate();
 
-        if (!Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "Permission required to show overlay", Toast.LENGTH_SHORT).show();
-            stopSelf();
-            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "Permission required to show overlay", Toast.LENGTH_SHORT).show();
+                stopSelf();
+                return;
+            }
         }
 
+        // Create the overlay view
         mImage = new ImageView(this);
         mImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
@@ -63,11 +76,44 @@ public class CrackScreen extends Service {
         mediaPlayer = MediaPlayer.create(this, R.raw.crack_screen);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         overlayView.setOnClickListener(v -> showCrackEffect());
+
+        // Start the service as a foreground service
+        startForegroundService();
     }
+
+    @SuppressLint("ForegroundServiceType")
+    private void startForegroundService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Tạo notification channel
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID, "Crack Screen Service", NotificationManager.IMPORTANCE_LOW);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
+        }
+
+        RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.noti);
+
+        Intent stopIntent = new Intent(this, StopReceiver.class);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notificationLayout.setOnClickPendingIntent(R.id.btn_stop, stopPendingIntent);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.img_logo)
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(notificationLayout)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+
+        startForeground(NOTIFICATION_ID, notification);
+    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        imageResId = intent.getIntExtra("image_resource", R.drawable.img_bg_screen_1);
+        imageResId = intent.getIntExtra("image_resource", R.drawable.img_screen_1);
         return START_STICKY;
     }
 
@@ -91,9 +137,9 @@ public class CrackScreen extends Service {
             mediaPlayer.start();
         }
 
-        // Rung
+        // Vibrate
         if (vibrator != null) {
-            vibrator.vibrate(500); // Rung trong 500ms
+            vibrator.vibrate(500); // Vibrate for 500ms
         }
         overlayView.setVisibility(View.GONE);
     }
@@ -104,5 +150,6 @@ public class CrackScreen extends Service {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         if (mImage != null) windowManager.removeView(mImage);
         if (overlayView != null) windowManager.removeView(overlayView);
+        if (mediaPlayer != null) mediaPlayer.release();  // Release media player resources
     }
 }

@@ -65,7 +65,6 @@ public class CrackScreenActivity extends BaseActivity<ActivityCrackScreenBinding
         binding.img.setImageResource(img);
         binding.ivBack.setOnClickListener(v -> onBack());
         binding.btnApply.setOnClickListener(v -> {
-            if (checkOverlayPermission()) {
                 Intent svc = new Intent(CrackScreenActivity.this, CrackScreen.class);
                 svc.putExtra("image_resource", screen);
                 startService(svc);
@@ -73,59 +72,11 @@ public class CrackScreenActivity extends BaseActivity<ActivityCrackScreenBinding
                 intent.addCategory(Intent.CATEGORY_HOME);
                 startActivity(intent);
                 finishAffinity();
-            } else {
-                showDialogGotoSetting();
-            }
 
         });
 
     }
 
-    public boolean checkOverlayPermission() {
-        return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this);
-    }
-
-    private void showDialogGotoSetting() {
-
-        Dialog dialog = new Dialog(this);
-        DialogPermissionBinding bindingPer = DialogPermissionBinding.inflate(getLayoutInflater());
-        dialog.setContentView(bindingPer.getRoot());
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setGravity(Gravity.CENTER);
-            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-
-        bindingPer.tvStay.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-        bindingPer.tvAgree.setOnClickListener(v -> {
-            Intent intent = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-            }
-            louncherOverlay.launch(intent);
-            dialog.dismiss();
-        });
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private final ActivityResultLauncher<Intent> louncherOverlay = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == RESULT_OK) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (Settings.canDrawOverlays(this)) {
-                } else {
-                }
-            } else {
-            }
-        }
-    });
 
     @Override
     public void bindView() {

@@ -17,6 +17,7 @@ import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivitySplashBinding;
 import com.example.timebomb.ui.intro.IntroActivity;
 import com.example.timebomb.ui.language.LanguageStartActivity;
+import com.example.timebomb.ui.sound.service.CrackScreen;
 import com.example.timebomb.util.SharePrefUtils;
 import com.example.timebomb.util.Utils;
 
@@ -38,7 +39,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
         SharePrefUtils.increaseCountOpenApp(this);
 
         new Handler(Looper.getMainLooper()).postDelayed(this::runAfterFinish,3000);
-
+        stopService(new Intent(this, CrackScreen.class));
 
     }
 

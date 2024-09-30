@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -102,8 +103,11 @@
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi" />
-        <service android:name=".ui.sound.service.CrackScreen" />
-
+        <service
+            android:name=".ui.sound.service.CrackScreen"
+            android:foregroundServiceType="mediaPlayback"
+            tools:ignore="ForegroundServicePermission" />
+        <receiver android:name=".ui.sound.service.StopReceiver" />
         <service
             android:name=".service.MyFirebaseMessagingService"
             android:exported="false">

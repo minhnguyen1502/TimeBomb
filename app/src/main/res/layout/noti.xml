@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_noti"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:layout_margin="8dp"
+    android:layout_gravity="center"
+    android:clipToPadding="false"
+    android:layoutDirection="ltr"
+    android:backgroundTintMode="src_in"
+    android:shape="rectangle">
+
+    <TextView
+        android:id="@+id/custom_notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/custom_notification_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="The crack screen effect is running"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Stop"
+        android:background="@drawable/bg_btn"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:layout_gravity="center"
+        android:backgroundTintMode="src_in"
+        android:shape="rectangle"/>
+</LinearLayout>

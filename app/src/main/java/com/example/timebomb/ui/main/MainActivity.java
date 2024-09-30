@@ -1,20 +1,28 @@
 package com.example.timebomb.ui.main;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.timebomb.R;
 import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityMainBinding;
+import com.example.timebomb.databinding.DialogPermissionBinding;
 import com.example.timebomb.ui.main.adapter.ItemAdapter;
 import com.example.timebomb.ui.main.model.ItemModel;
 import com.example.timebomb.ui.setting.SettingActivity;
@@ -64,7 +72,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                     clickItem("flame");
                     break;
                 case 5:
-                    clickItem("crack");
+                    if (checkOverlayPermission()) {
+                        clickItem("crack");
+
+                    } else {
+                        showDialogGotoSetting();
+                    }
                     break;
             }
         },this);
@@ -78,6 +91,51 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         i.putExtra("type",type);
         startActivity(i);
     }
+    public boolean checkOverlayPermission() {
+        return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this);
+    }
+
+    private void showDialogGotoSetting() {
+
+        Dialog dialog = new Dialog(this);
+        DialogPermissionBinding bindingPer = DialogPermissionBinding.inflate(getLayoutInflater());
+        dialog.setContentView(bindingPer.getRoot());
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setGravity(Gravity.CENTER);
+            dialog.getWindow().setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        bindingPer.tvStay.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        bindingPer.tvAgree.setOnClickListener(v -> {
+            Intent intent = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            }
+            louncherOverlay.launch(intent);
+            dialog.dismiss();
+        });
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private final ActivityResultLauncher<Intent> louncherOverlay = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(this)) {
+                } else {
+                }
+            } else {
+            }
+        }
+    });
 
     @Override
     public void bindView() {
