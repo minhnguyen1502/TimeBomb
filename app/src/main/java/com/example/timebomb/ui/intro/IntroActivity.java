@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -104,7 +105,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     public void goToNextScreen() {
-        if(checkMediaPermission ()){
+        if(checkOverlayPermission()){
             Intent intent = new Intent(IntroActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -116,13 +117,8 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
         }
     }
 
-    private boolean checkMediaPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
-        } else {
-            // For Android versions below 13, check the legacy permission
-            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        }
+    public boolean checkOverlayPermission() {
+        return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(IntroActivity.this);
     }
 
     @Override

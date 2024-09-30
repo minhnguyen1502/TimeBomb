@@ -29,7 +29,8 @@
         android:maxLines="1"
         android:text="Crack Screen"
         android:textColor="@color/white"
-        android:textSize="32sp"
+        android:textSize="21sp"
+        android:fontFamily="@font/inter_bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toStartOf="@id/background"
         app:layout_constraintStart_toEndOf="@id/iv_back"
@@ -48,6 +49,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
     <ImageView
+        android:id="@+id/img"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="55dp"
@@ -67,7 +69,7 @@
         android:paddingVertical="8dp"
         android:text="Apply"
         android:fontFamily="@font/inter_bold"
-        android:textColor="@color/white"
+        android:textColor="#F6C941"
         android:textSize="20sp"
         android:layout_marginTop="38dp"
         android:layout_marginBottom="74dp"

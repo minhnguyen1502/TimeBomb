@@ -39,8 +39,8 @@
     <string name="title_intro_03">Title 03</string>
     <string name="continue_">Continue</string>
     <string name="are_you_sure_want_to_quit_app">Are you sure want to quit app?</string>
-    <string name="title_dialog_per">Grant these permissions to use <b>"Funny Sound App - Prank Sound"</b>></string>
-    <string name="content_dialog_per">Note: You can also grant permission in <b>Settings -> Apps -> Funny Sound App - Prank Sound ->  Storage Access </b></string>
+    <string name="title_dialog_per">Grant these permissions to use <b>"Time Bomb"</b></string>
+    <string name="content_dialog_per">Note: You can also grant permission in <b>Settings -> Time Bomb ->  Overlay Access </b></string>
     <string name="u_privacy_policy"><u>Privacy Policy</u></string>
     <string name="time_bomb">Time Bomb</string>
     <string name="taser_gun">"Taser Gun "</string>

@@ -35,7 +35,7 @@
         android:maxLines="1"
         android:text="Time Bomb Prank"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="21sp"
         app:layout_constraintEnd_toStartOf="@id/iv_setting"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintStart_toEndOf="@id/iv_back"

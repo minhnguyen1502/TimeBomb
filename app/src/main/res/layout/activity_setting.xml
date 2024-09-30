@@ -24,13 +24,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="@font/inter_bold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
         android:text="Settings"
         android:textColor="@color/white"
-        android:textSize="32sp"
+        android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toStartOf="@id/favorite"
         app:layout_constraintStart_toEndOf="@id/iv_back"
@@ -77,9 +78,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="Vibration"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_vibration"
             app:layout_constraintStart_toEndOf="@id/ic_vibration"
             app:layout_constraintTop_toTopOf="@id/ic_vibration" />
@@ -125,9 +128,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="Splah"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_flash"
             app:layout_constraintStart_toEndOf="@id/ic_flash"
             app:layout_constraintTop_toTopOf="@id/ic_flash" />
@@ -172,9 +177,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="Sound"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_sound"
             app:layout_constraintStart_toEndOf="@id/ic_sound"
             app:layout_constraintTop_toTopOf="@id/ic_sound" />
@@ -218,6 +225,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="Language"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -267,9 +275,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="@string/share"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_sh"
             app:layout_constraintStart_toEndOf="@id/ic_sh"
             app:layout_constraintTop_toTopOf="@id/ic_sh" />
@@ -302,9 +312,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="@string/rate"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_ra"
             app:layout_constraintStart_toEndOf="@id/ic_ra"
             app:layout_constraintTop_toTopOf="@id/ic_ra" />
@@ -337,9 +349,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
             android:text="@string/about"
             android:textColor="@color/white"
             android:textSize="16sp"
+
             app:layout_constraintBottom_toBottomOf="@id/ic_ab"
             app:layout_constraintStart_toEndOf="@id/ic_ab"
             app:layout_constraintTop_toTopOf="@id/ic_ab" />

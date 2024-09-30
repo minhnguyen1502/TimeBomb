@@ -91,7 +91,8 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
 
                     binding.rcvSound.setAdapter(new SoundAdapter(screen, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, CrackScreenActivity.class);
-                        i1.putExtra("img", soundModel.getImg_play());
+                        i1.putExtra("img", soundModel.getImg());
+                        i1.putExtra("screen", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
                         startActivity(i1);
                     }));

@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,7 +50,9 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
         holder.tvLang.setText(languageModel.getName());
 
         if (languageModel.getActive()) {
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_s);
         } else {
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_sn);
         }
 
         switch (languageModel.getCode()) {
@@ -79,11 +82,11 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
                 break;
         }
 
-//        holder.layoutItem.setOnClickListener(v -> {
-//            setCheck(languageModel.getCode());
-//            iClickItemLanguage.onClickItemLanguage(languageModel.getCode());
-//            notifyDataSetChanged();
-//        });
+        holder.item.setOnClickListener(v -> {
+            setCheck(languageModel.getCode());
+            iClickItemLanguage.onClickItemLanguage(languageModel.getCode());
+            notifyDataSetChanged();
+        });
 
     }
 
@@ -99,11 +102,12 @@ public class LanguageStartAdapter extends RecyclerView.Adapter<LanguageStartAdap
     public static class LanguageViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvLang;
         private final ImageView icLang;
-
+        private final ConstraintLayout item;
         public LanguageViewHolder(@NonNull View itemView) {
             super(itemView);
             icLang = itemView.findViewById(R.id.icLang);
             tvLang = itemView.findViewById(R.id.tvLang);
+            item = itemView.findViewById(R.id.item);
         }
     }
 

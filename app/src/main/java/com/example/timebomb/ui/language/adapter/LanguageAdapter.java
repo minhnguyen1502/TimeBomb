@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +47,12 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langug
         }
         holder.tvLang.setText(languageModel.getName());
 
+        if (languageModel.getActive()) {
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_s);
+        } else {
+            holder.item.setBackgroundResource(R.drawable.bg_lang_item_sn);
+        }
+
         switch (languageModel.getCode()) {
             case "fr":
                 Glide.with(context).asBitmap().load(R.drawable.ic_lang_fr).into(holder.icLang);
@@ -73,11 +80,11 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langug
                 break;
         }
 
-//        holder.layoutItem.setOnClickListener(v -> {
-//            setCheck(languageModel.getCode());
-//            iClickLanguage.onClickItemLanguage(languageModel.getCode());
-//            notifyDataSetChanged();
-//        });
+        holder.item.setOnClickListener(v -> {
+            setCheck(languageModel.getCode());
+            iClickLanguage.onClickItemLanguage(languageModel.getCode());
+            notifyDataSetChanged();
+        });
 
     }
 
@@ -93,11 +100,12 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langug
     public static class LangugeViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvLang;
         private final ImageView icLang;
-
+        private final ConstraintLayout item;
         public LangugeViewHolder(@NonNull View itemView) {
             super(itemView);
             icLang = itemView.findViewById(R.id.icLang);
             tvLang = itemView.findViewById(R.id.tvLang);
+            item = itemView.findViewById(R.id.item);
         }
     }
 
@@ -108,5 +116,4 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langug
         }
         notifyDataSetChanged();
     }
-
 }

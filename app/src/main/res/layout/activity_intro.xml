@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_04"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@drawable/bg_04">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/view_bottom">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp">
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:contentDescription="Intro"
+                android:layout_marginTop="29dp"
                 app:layout_constraintDimensionRatio="360:550"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText"  />
+                tools:ignore="HardcodedText" />
+
             <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="82dp"
                 android:layout_marginTop="-40dp"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -38,15 +43,14 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_marginHorizontal="82dp"
-                tools:ignore="HardcodedText"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20sp"
+                android:fontFamily="@font/inter_bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_pager2"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_pager2"
+                tools:ignore="HardcodedText" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
     <RelativeLayout
@@ -97,18 +101,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:textColor="@color/black"
-            android:visibility="gone"
+            android:fontFamily="@font/inter_medium"
             android:paddingVertical="@dimen/_5sdp"
             android:paddingStart="@dimen/_12sdp"
             android:text="@string/next"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
             tools:ignore="RtlSymmetry" />
+
         <TextView
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:fontFamily="@font/inter_medium"
             android:paddingVertical="@dimen/_5sdp"
             android:paddingStart="@dimen/_12sdp"
             android:text="@string/next"
@@ -151,23 +158,23 @@
     <!--        </FrameLayout>-->
     <!--    </RelativeLayout>-->
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/nativeIntro"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/nativeIntro"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
 
-<!--        <FrameLayout-->
-<!--            android:id="@+id/fr_ads_intro"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="visible">-->
+    <!--        <FrameLayout-->
+    <!--            android:id="@+id/fr_ads_intro"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:visibility="visible">-->
 
-<!--            <include layout="@layout/layout_native_load_small_above" />-->
-<!--        </FrameLayout>-->
-<!--    </RelativeLayout>-->
+    <!--            <include layout="@layout/layout_native_load_small_above" />-->
+    <!--        </FrameLayout>-->
+    <!--    </RelativeLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

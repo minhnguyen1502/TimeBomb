@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg_01"
+    android:background="@drawable/bg_04"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_back"
@@ -28,9 +28,9 @@
         android:includeFontPadding="false"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:textSize="20sp"
+        android:textSize="21sp"
         android:text="name"
-        android:textAllCaps="true"
+        android:fontFamily="@font/inter_bold"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintStart_toEndOf="@id/iv_back"

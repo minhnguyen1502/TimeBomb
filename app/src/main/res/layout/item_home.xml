@@ -35,7 +35,7 @@
             android:layout_marginBottom="14dp"
             android:fontFamily="@font/inter_bold"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textColor="#D9D9D9"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

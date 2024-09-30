@@ -13,6 +13,8 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.widget.RelativeLayout;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,6 +38,9 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
     public void initView() {
 
     }
+    public boolean checkOverlayPermission() {
+        return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(PermissionActivity.this);
+    }
 
     private void showDialogGotoSetting() {
         Dialog dialog = new Dialog(this);
@@ -51,23 +56,37 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
         bindingPer.tvStay.setOnClickListener(v -> dialog.dismiss());
         bindingPer.tvAgree.setOnClickListener(v -> {
-
+            Intent intent = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            }
+            louncherOverlay.launch(intent);
             dialog.dismiss();
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", getPackageName(), null);
-            intent.setData(uri);
-            startActivity(intent);
         });
 
         if (!dialog.isShowing()) {
             dialog.show();
         }
     }
-
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private final ActivityResultLauncher<Intent> louncherOverlay = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(PermissionActivity.this)) {
+                } else {
+                }
+            } else {
+            }
+        }
+    });
     @Override
     protected void onResume() {
         super.onResume();
+        if (checkOverlayPermission()) {
+                binding.swOverlay.setImageResource(R.drawable.img_switch_s);
+            } else {
+                binding.swOverlay.setImageResource(R.drawable.img_switch_ns);
+            }
 
     }
 
@@ -77,6 +96,12 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
             startNextActivity(MainActivity.class, null);
             finishAffinity();
+        });
+
+        binding.swOverlay.setOnClickListener(v -> {
+            if (!checkOverlayPermission()) {
+                showDialogGotoSetting();
+            }
         });
         
     }
