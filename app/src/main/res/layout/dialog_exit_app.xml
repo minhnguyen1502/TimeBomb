@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:gravity="center_vertical"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +22,10 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:text="@string/quit"
+            android:fontFamily="@font/inter_semi_bold"
+            android:text="Exit"
             android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_content_quit"
@@ -32,15 +34,16 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/are_you_sure_want_to_quit_app"
+            android:text="Are you sure to quit the application"
             android:textColor="@color/black"
-            android:textSize="@dimen/_11ssp" />
+            android:fontFamily="@font/inter_regular"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_28sdp">
+            android:layout_marginTop="16dp">
 
             <View
                 android:id="@+id/view_center"
@@ -54,20 +57,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/view_center"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_btn"
+                android:backgroundTint="#E5E7EB"
+                android:layout_toStartOf="@+id/view_center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:layout_marginVertical="10dp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:singleLine="true"
+                    android:fontFamily="@font/inter_medium"
                     android:text="@string/cancel"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textColor="#111827"
+                    android:textSize="15sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -76,20 +81,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/view_center"
-                android:backgroundTint="#d82d25"
-                android:background="@drawable/bg_view_32">
+                android:background="@drawable/bg_btn">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:layout_marginVertical="10dp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/quit"
-                    android:textColor="#FCFCFC"
-                    android:textSize="@dimen/_10ssp" />
+                    android:text="OK"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="#111827"
+                    android:textSize="15sp" />
             </RelativeLayout>
         </RelativeLayout>
 

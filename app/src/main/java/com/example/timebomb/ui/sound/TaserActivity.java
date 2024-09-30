@@ -64,7 +64,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
 
-        background = SPUtils.getInt(this, SPUtils.BG, R.drawable.bg_04);
+        background = SPUtils.getInt(this, SPUtils.BG_TASER, R.drawable.bg_04);
         binding.background.setBackgroundResource(background);
 
         Intent i = getIntent();
@@ -301,7 +301,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         }
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_TASER, -1);
 
         int selectedPosition = 4;
         for (int i = 0; i < backgroundList.size(); i++) {
@@ -313,7 +313,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
 
         BackgroundAdapter adapter = new BackgroundAdapter(this, backgroundList, selectedPosition, (position, backgroundModel) -> {
             binding.background.setBackgroundResource(backgroundModel.getImg());
-            SPUtils.setInt(this, SPUtils.BG, backgroundModel.getImg());
+            SPUtils.setInt(this, SPUtils.BG_TASER, backgroundModel.getImg());
         });
         dialogBinding.rcvBackground.setAdapter(adapter);
         dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
@@ -434,6 +434,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         isBlinking = false;
         toggleFlashlight(false);  // Make sure flashlight is off when stopping
     }
+    private boolean wasPlaying = false;
 
     @Override
     public void onBack() {
@@ -458,6 +459,17 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        if (mediaPlayer != null && wasPlaying) {
+            if (isSound){
+                mediaPlayer.start();
+            }
+            if (isVibrate) {
+                startVibrate();
+            }
+            if (isFlash){
+                startFlash();
+            }
+        }
     }
 
     @Override
@@ -465,6 +477,17 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         super.onPause();
         // Hủy đăng ký cảm biến để tiết kiệm pin
         sensorManager.unregisterListener(this);
+
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                wasPlaying = true;
+                mediaPlayer.pause();
+                stopVibrate();
+                stopFlash();
+            } else {
+                wasPlaying = false;
+            }
+        }
     }
 
 

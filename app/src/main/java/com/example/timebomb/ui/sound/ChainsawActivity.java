@@ -60,7 +60,7 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
 
-        background = SPUtils.getInt(this, SPUtils.BG, R.drawable.bg_04);
+        background = SPUtils.getInt(this, SPUtils.BG_CHAINSAW, R.drawable.bg_04);
         binding.background.setBackgroundResource(background);
         Intent i = getIntent();
         img = i.getIntExtra("img", -1);
@@ -181,7 +181,7 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
         }
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG, 4);
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_CHAINSAW, 4);
 
         int selectedPosition = 3;
         for (int i = 0; i < backgroundList.size(); i++) {
@@ -192,7 +192,7 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
         }
         BackgroundAdapter adapter = new BackgroundAdapter(this, backgroundList,selectedPosition,  (position, backgroundModel) -> {
             binding.background.setBackgroundResource(backgroundModel.getImg());
-            SPUtils.setInt(this, SPUtils.BG, backgroundModel.getImg());
+            SPUtils.setInt(this, SPUtils.BG_CHAINSAW, backgroundModel.getImg());
         });
         dialogBinding.rcvBackground.setAdapter(adapter);
         dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
@@ -238,6 +238,40 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
                 vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
             }
         }
+    }
+    private boolean wasPlaying = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                wasPlaying = true;
+                mediaPlayer.pause();
+                stopVibrate();
+                stopFlash();
+            } else {
+                wasPlaying = false;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer != null && wasPlaying) {
+            if (isSound){
+                mediaPlayer.start();
+            }
+            if (isVibrate) {
+                startVibrate();
+            }
+            if (isFlash){
+                startFlash();
+            }
+        }
+
     }
     private boolean isBlinking = false;
     private boolean isFlashlightOn = false;

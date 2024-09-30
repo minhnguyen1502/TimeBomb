@@ -11,7 +11,10 @@ public class SPUtils {
     public static final String IS_VIBRATE = "IS_VIBRATE";
     public static final String IS_SOUND = "IS_SOUND";
     public static final String IS_FLASH = "IS_FLASH";
-    public static final String BG = "BG";
+    public static final String BG_CHAINSAW = "BG_CHAINSAW";
+    public static final String BG_FLAME = "BG_FLAME";
+    public static final String BG_SABER = "BG_SABER";
+    public static final String BG_TASER = "BG_TASER";
 
 
     public static SharedPreferences getPref(Context context) {

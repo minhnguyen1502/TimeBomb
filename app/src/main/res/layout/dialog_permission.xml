@@ -1,93 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_29sdp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/_12sdp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@drawable/bg_view_c15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/tv_1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp"
             android:ellipsize="end"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:maxLines="1"
-            android:text="Permission"
-            android:textColor="@color/black"
+            android:padding="12dp"
+            android:src="@drawable/ic_permission"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:includeFontPadding="false"
-            android:text="@string/title_dialog_per"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:includeFontPadding="false"
-            android:text="@string/content_dialog_per"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:text="This app may not work correctly without the requested permissions. Go to Settings -> Time Bomb Prank -> Overlay Access"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_1"
+            tools:ignore="HardcodedText"
+            tools:layout_editor_absoluteY="113dp" />
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#E0E0E0"
+            app:layout_constraintBottom_toTopOf="@id/tvAgree"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#E0E0E0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAgree" />
+
+        <TextView
+            android:id="@+id/tvAgree"
+
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="16dp"
+            android:text="Go to Settings"
+            android:textColor="#111827"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
-            <TextView
-                android:id="@+id/tvStay"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:paddingHorizontal="@dimen/_12sdp"
-                android:paddingVertical="@dimen/_9sdp"
-                android:text="Stay"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
+        <TextView
+            android:id="@+id/tvStay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="16dp"
+            android:textColor="@color/black"
+            android:text="Cancel"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAgree" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvAgree"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:paddingHorizontal="@dimen/_12sdp"
-                android:paddingVertical="@dimen/_9sdp"
-                android:text="Agree"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
-        </LinearLayout>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

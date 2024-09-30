@@ -59,7 +59,7 @@ public class FlameActivity extends BaseActivity<ActivityPlaySoundFlameThrowerBin
         isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, false);
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
-        background = SPUtils.getInt(this, SPUtils.BG, R.drawable.bg_04);
+        background = SPUtils.getInt(this, SPUtils.BG_FLAME, R.drawable.bg_04);
         binding.background.setBackgroundResource(background);
         Intent i = getIntent();
         img = i.getIntExtra("img", -1);
@@ -182,7 +182,7 @@ public class FlameActivity extends BaseActivity<ActivityPlaySoundFlameThrowerBin
         }
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG, -1);
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_FLAME, -1);
 
         int selectedPosition = 4;
         for (int i = 0; i < backgroundList.size(); i++) {
@@ -194,7 +194,7 @@ public class FlameActivity extends BaseActivity<ActivityPlaySoundFlameThrowerBin
 
         BackgroundAdapter adapter = new BackgroundAdapter(this, backgroundList,selectedPosition, (position, backgroundModel) -> {
             binding.background.setBackgroundResource(backgroundModel.getImg());
-            SPUtils.setInt(this, SPUtils.BG, backgroundModel.getImg());
+            SPUtils.setInt(this, SPUtils.BG_FLAME, backgroundModel.getImg());
         });
         dialogBinding.rcvBackground.setAdapter(adapter);
         dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
@@ -283,6 +283,42 @@ public class FlameActivity extends BaseActivity<ActivityPlaySoundFlameThrowerBin
         isBlinking = false;
         toggleFlashlight(false);  // Make sure flashlight is off when stopping
     }
+
+    private boolean wasPlaying = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                wasPlaying = true;
+                mediaPlayer.pause();
+                stopVibrate();
+                stopFlash();
+            } else {
+                wasPlaying = false;
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer != null && wasPlaying) {
+            if (isSound){
+                mediaPlayer.start();
+            }
+            if (isVibrate) {
+                startVibrate();
+            }
+            if (isFlash){
+                startFlash();
+            }
+        }
+
+    }
+
     @Override
     public void onBack() {
         finish();

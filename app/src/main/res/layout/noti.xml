@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center" />
 
@@ -27,23 +28,26 @@
         android:id="@+id/custom_notification_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="The crack screen effect is running"
+        android:text="You are using Crack Screen"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="16sp"
         android:gravity="center"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/btn_stop"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Stop"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_btn"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:padding="12dp"
-        android:layout_gravity="center"
         android:backgroundTintMode="src_in"
-        android:shape="rectangle"/>
+        android:padding="12dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/inter_medium"
+        android:shape="rectangle"
+        android:text="Stop"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 </LinearLayout>
