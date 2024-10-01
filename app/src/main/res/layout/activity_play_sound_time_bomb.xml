@@ -125,25 +125,7 @@
                     app:layout_constraintStart_toEndOf="@id/btn_minus"
                     app:layout_constraintTop_toTopOf="@id/btn_plus"
                     tools:ignore="HardcodedText" />
-                <com.example.timebomb.base.CustomTextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="26dp"
-                    android:fontFamily="@font/inter_bold"
-                    android:fontFeatureSettings="tnum=on"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingVertical="9dp"
-                    android:text="00:00"
-                    android:textColor="#DB0202"
-                    android:background="@drawable/bg_start_countdown"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_plus"
-                    app:layout_constraintEnd_toStartOf="@id/btn_plus"
-                    app:layout_constraintStart_toEndOf="@id/btn_minus"
-                    app:layout_constraintTop_toTopOf="@id/btn_plus"
-                    tools:ignore="HardcodedText" />
+
                 <TextView
                     android:id="@+id/btn_start"
                     android:layout_width="148dp"
