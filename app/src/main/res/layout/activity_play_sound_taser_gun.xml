@@ -162,11 +162,23 @@
                 android:layout_height="650dp"
                 android:layout_marginStart="-130dp"
                 android:layout_marginBottom="-300dp"
-                android:rotation="90"
                 android:visibility="gone"
+                android:rotation="-90"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:layout_constraintBottom_toTopOf="@id/img2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:lottie_fileName="elec.json" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/img_anim3"
+                android:layout_width="60dp"
+                android:layout_height="600dp"
+                android:visibility="gone"
+                android:layout_marginBottom="-300dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:layout_constraintBottom_toTopOf="@id/img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:lottie_fileName="elec.json" />
@@ -178,7 +190,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/img_taser_gun_play_1"/>
+                android:src="@drawable/img_taser_gun_play_2"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

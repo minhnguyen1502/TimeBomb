@@ -99,6 +99,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 stopVibrate();
                 binding.imgAnim.setVisibility(View.GONE);
                 binding.imgAnim2.setVisibility(View.GONE);
+                binding.imgAnim3.setVisibility(View.GONE);
                 stopFlash();
                 binding.ctlFunction.setVisibility(View.VISIBLE);
 
@@ -191,9 +192,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 if (position >= 0 && position <= 3) {
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+                }else if (position == 7){
+                    binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.VISIBLE);
                 } else {
                     binding.imgAnim.setVisibility(View.VISIBLE);
                     binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -214,9 +222,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 if (position >= 0 && position <= 3) {
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+                }else if (position == 7){
+                    binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.VISIBLE);
                 } else {
                     binding.imgAnim.setVisibility(View.VISIBLE);
                     binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -242,9 +257,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                         if (position >= 0 && position <= 3) {
                             binding.imgAnim2.setVisibility(View.VISIBLE);
                             binding.imgAnim.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.GONE);
+                        }else if (position == 7){
+                            binding.imgAnim2.setVisibility(View.GONE);
+                            binding.imgAnim.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.VISIBLE);
                         } else {
                             binding.imgAnim.setVisibility(View.VISIBLE);
                             binding.imgAnim2.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.GONE);
+
                         }
                         return true;
                     case MotionEvent.ACTION_UP:
@@ -253,6 +275,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                         stopFlash();
                         binding.imgAnim.setVisibility(View.GONE);
                         binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
                         mediaPlayer.setLooping(false);
                         stopVibrate();
                         binding.ivBack.setClickable(true);
@@ -282,9 +305,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                         if (position >= 0 && position <= 3) {
                             binding.imgAnim2.setVisibility(View.VISIBLE);
                             binding.imgAnim.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.GONE);
+                        }else if (position == 7){
+                            binding.imgAnim2.setVisibility(View.GONE);
+                            binding.imgAnim.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.VISIBLE);
                         } else {
                             binding.imgAnim.setVisibility(View.VISIBLE);
                             binding.imgAnim2.setVisibility(View.GONE);
+                            binding.imgAnim3.setVisibility(View.GONE);
+
                         }
                         return true;
                     case MotionEvent.ACTION_UP:
@@ -294,6 +324,8 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                         mediaPlayer.setLooping(false);
                         binding.imgAnim.setVisibility(View.GONE);
                         binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
+
                         stopVibrate();
                         return true;
                 }
@@ -430,9 +462,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 if (position >= 0 && position <= 3) {
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+                }else if (position == 7){
+                    binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.VISIBLE);
                 } else {
                     binding.imgAnim.setVisibility(View.VISIBLE);
                     binding.imgAnim2.setVisibility(View.GONE);
+                    binding.imgAnim3.setVisibility(View.GONE);
+
                 }
             }
 
@@ -451,7 +490,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         try {
             if (cameraManager == null) {
                 cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-                cameraId = cameraManager.getCameraIdList()[0]; // Get the ID of the back-facing camera
+                cameraId = cameraManager.getCameraIdList()[0];
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 cameraManager.setTorchMode(cameraId, turnOn);

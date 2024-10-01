@@ -29,6 +29,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     private MediaPlayer mediaPlayer;
     boolean isVibrate, isSound, isFlash;
     long currentTimeInSeconds = 1;
+    private boolean isBom = false;
 
     @Override
     public ActivityPlaySoundTimeBombBinding getBinding() {
@@ -37,9 +38,9 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     @Override
     public void initView() {
-        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, false);
-        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
-        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
+        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, true);
+        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, true);
+        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, true);
         Intent i = getIntent();
         int img = i.getIntExtra("img", -1);
         int sound = i.getIntExtra("sound", -1);
@@ -61,35 +62,38 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     public void bindView() {
         binding.btnPlus.setOnClickListener(v -> increaseTime());
         binding.btnMinus.setOnClickListener(v -> decreaseTime());
-        binding.btnStart.setOnClickListener(v -> startCountdown(currentTimeInSeconds));
+        binding.btnStart.setOnClickListener(v -> startCountdown(currentTimeInSeconds+1));
         binding.ivBack.setOnClickListener(v -> onBack());
-
+        binding.gif.setOnClickListener(v -> {
+            if (!isBom){
+                binding.gif.setVisibility(View.GONE);
+            }
+        });
     }
 
 
     private void startCountdown(long remainingTime) {
         isCountingDown = true;
 
-        // Manually set the initial time before the first tick
         currentTimeInSeconds = remainingTime;
         minutes = remainingTime / 60;
         seconds = remainingTime % 60;
-        String timeFormatted = String.format("%02d:%02d", minutes, seconds);
+        @SuppressLint("DefaultLocale") String timeFormatted = String.format("%02d:%02d", minutes, seconds);
         binding.time.setText(timeFormatted);
 
         countDownTimer = new CountDownTimer(remainingTime * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                currentTimeInSeconds = millisUntilFinished / 1000;
                 minutes = (millisUntilFinished / 1000) / 60;
                 seconds = (millisUntilFinished / 1000) % 60;
-                String timeFormatted = String.format("%02d:%02d", minutes, seconds);
+                @SuppressLint("DefaultLocale") String timeFormatted = String.format("%02d:%02d", minutes, seconds);
                 binding.time.setText(timeFormatted);
                 binding.btnPlus.setVisibility(View.INVISIBLE);
                 binding.btnMinus.setVisibility(View.INVISIBLE);
                 binding.btnStart.setVisibility(View.INVISIBLE);
                 binding.time.setTextColor(android.graphics.Color.parseColor("#DB0202"));
                 binding.time.setBackgroundResource(R.drawable.bg_start_countdown);
+                currentTimeInSeconds = millisUntilFinished / 1000;
                 Log.e("time: ", currentTimeInSeconds + "");
             }
 
@@ -153,6 +157,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     }
 
     private void bomb() {
+        isBom = true;
         binding.gif.setVisibility(View.VISIBLE);
         try {
             if (isSound) {
@@ -168,7 +173,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
             binding.gif.setImageDrawable(gifDrawable);
             gifDrawable.setLoopCount(1);
             gifDrawable.addAnimationListener(i -> {
-                binding.gif.setVisibility(View.GONE);
+                isBom = false;
                 stopSound();
                 stopVibrate();
             });
