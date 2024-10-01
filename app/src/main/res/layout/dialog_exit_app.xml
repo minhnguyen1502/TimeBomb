@@ -23,7 +23,7 @@
             android:includeFontPadding="false"
             android:singleLine="true"
             android:fontFamily="@font/inter_semi_bold"
-            android:text="Exit"
+            android:text="@string/exit"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -34,7 +34,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="Are you sure to quit the application"
+            android:text="@string/are_you_sure_to_quit_the_application"
             android:textColor="@color/black"
             android:fontFamily="@font/inter_regular"
             android:textSize="16sp" />
@@ -91,7 +91,7 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="OK"
+                    android:text="@string/ok"
                     android:fontFamily="@font/inter_medium"
                     android:textColor="#111827"
                     android:textSize="15sp" />

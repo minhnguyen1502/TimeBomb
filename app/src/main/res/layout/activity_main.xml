@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/background"
-    android:background="@drawable/bg_home"
+    android:background="@drawable/bg_04"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
@@ -33,7 +33,7 @@
         android:fontFamily="@font/inter_bold"
         android:lines="1"
         android:maxLines="1"
-        android:text="Time Bomb Prank"
+        android:text="@string/time_bomb_prank"
         android:textColor="@color/white"
         android:textSize="21sp"
         app:layout_constraintEnd_toStartOf="@id/iv_setting"
@@ -51,7 +51,8 @@
         android:padding="12dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"

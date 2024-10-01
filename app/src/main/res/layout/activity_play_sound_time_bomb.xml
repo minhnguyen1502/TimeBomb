@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_02">
+    android:background="@drawable/bg_04">
 
 
     <ImageView
@@ -25,14 +25,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="@font/inter_bold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Time Bomb"
+        android:text="@string/time_bomb"
         android:textColor="@color/white"
         android:textSize="21sp"
-        android:fontFamily="@font/inter_bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toStartOf="@id/favorite"
         app:layout_constraintStart_toEndOf="@id/iv_back"
@@ -52,90 +52,128 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toTopOf="@id/ctl_set_time"
-        android:layout_marginHorizontal="54dp"
-        android:layout_marginVertical="24dp"
-        android:src="@drawable/img_bomb_8"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ctl_set_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="34dp"
-        android:layout_marginBottom="93dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
 
-        <ImageView
-            android:id="@+id/btn_minus"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_minus_disable"
-            app:layout_constraintEnd_toStartOf="@id/btn_start"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/btn_plus"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_plus_disable"
-            app:layout_constraintBottom_toTopOf="@id/btn_start"
-            app:layout_constraintStart_toEndOf="@id/btn_start"/>
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="0dp"
+                android:layout_height="500dp"
+                android:layout_marginHorizontal="54dp"
+                android:src="@drawable/img_bomb_play_1"
+                app:layout_constraintBottom_toTopOf="@id/ctl_set_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
-        <com.example.timebomb.base.CustomTextView
-            android:fontFeatureSettings="tnum=on"
-            android:includeFontPadding="false"
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/btn_minus"
-            app:layout_constraintEnd_toStartOf="@id/btn_plus"
-            android:paddingVertical="9dp"
-            android:layout_marginHorizontal="26dp"
-            android:text="00:00"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:fontFamily="@font/inter_bold"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="@id/btn_plus"
-            app:layout_constraintBottom_toBottomOf="@id/btn_plus"/>
-        <TextView
-            android:id="@+id/btn_start"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_btn_start"
-            android:gravity="center"
-            android:paddingVertical="8dp"
-            android:text="Start"
-            android:fontFamily="@font/inter_bold"
-            android:textColor="#F6C941"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/btn_plus"
-            android:layout_marginTop="38dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_set_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="34dp"
+                android:layout_marginBottom="93dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/btn_minus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_minus_disable"
+                    app:layout_constraintEnd_toStartOf="@id/btn_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/btn_plus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_plus_disable"
+                    app:layout_constraintBottom_toTopOf="@id/btn_start"
+                    app:layout_constraintStart_toEndOf="@id/btn_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <com.example.timebomb.base.CustomTextView
+                    android:id="@+id/time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="26dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:fontFeatureSettings="tnum=on"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingVertical="9dp"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_plus"
+                    app:layout_constraintEnd_toStartOf="@id/btn_plus"
+                    app:layout_constraintStart_toEndOf="@id/btn_minus"
+                    app:layout_constraintTop_toTopOf="@id/btn_plus"
+                    tools:ignore="HardcodedText" />
+                <com.example.timebomb.base.CustomTextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="26dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:fontFeatureSettings="tnum=on"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingVertical="9dp"
+                    android:text="00:00"
+                    android:textColor="#DB0202"
+                    android:background="@drawable/bg_start_countdown"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_plus"
+                    app:layout_constraintEnd_toStartOf="@id/btn_plus"
+                    app:layout_constraintStart_toEndOf="@id/btn_minus"
+                    app:layout_constraintTop_toTopOf="@id/btn_plus"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/btn_start"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="38dp"
+                    android:background="@drawable/bg_btn_start"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="@string/start"
+                    android:textColor="#F6C941"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_plus" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

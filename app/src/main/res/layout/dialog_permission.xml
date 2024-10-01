@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:includeFontPadding="false"
-            android:text="This app may not work correctly without the requested permissions. Go to Settings -> Time Bomb Prank -> Overlay Access"
+            android:text="@string/this_app_may_not_work_correctly_without_the_requested_permissions_go_to_settings_time_bomb_prank_overlay_access"
             android:textColor="#212121"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:background="#E0E0E0"
             app:layout_constraintBottom_toTopOf="@id/tvAgree"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:background="#E0E0E0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,6 @@
 
         <TextView
             android:id="@+id/tvAgree"
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -79,7 +78,7 @@
             android:maxLines="1"
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp"
-            android:text="Go to Settings"
+            android:text="@string/go_to_settings"
             android:textColor="#111827"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +96,7 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp"
             android:textColor="@color/black"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

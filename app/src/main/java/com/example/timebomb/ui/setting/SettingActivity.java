@@ -30,9 +30,9 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
 
     @Override
     public void initView() {
-        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE,false);
-        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND,false);
-        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH,false);
+        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE,true);
+        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND,true);
+        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH,true);
     }
 
     @Override

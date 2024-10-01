@@ -28,7 +28,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Light Saber"
+        android:text="@string/light_saber"
         android:textColor="@color/white"
         android:textSize="21sp"
         android:fontFamily="@font/inter_bold"
@@ -48,69 +48,94 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/ic_hold"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_n_select"
-        android:padding="12dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@id/iv_background"
-        app:layout_constraintTop_toBottomOf="@id/iv_background"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hold"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="15sp"
-        app:layout_constraintTop_toTopOf="@id/ic_hold"
-        app:layout_constraintBottom_toBottomOf="@id/ic_hold"
-        app:layout_constraintEnd_toStartOf="@id/ic_hold"
-        android:layout_marginEnd="-4dp"
-        android:textColor="@color/white"/>
-
-    <ImageView
-        android:id="@+id/ic_touch"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_n_select"
-        android:padding="12dp"
-        android:layout_marginTop="-8dp"
-        app:layout_constraintEnd_toEndOf="@id/iv_background"
-        app:layout_constraintTop_toBottomOf="@id/ic_hold"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Touch"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="15sp"
-        app:layout_constraintTop_toTopOf="@id/ic_touch"
-        app:layout_constraintBottom_toBottomOf="@id/ic_touch"
-        app:layout_constraintEnd_toStartOf="@id/ic_touch"
-        android:layout_marginEnd="-4dp"
-        android:textColor="@color/white"/>
-
-
-    <ImageView
-        android:id="@+id/img1"
-        android:layout_width="30dp"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        android:src="@drawable/img_light_saber_6_1"
-        android:layout_marginBottom="-430dp"
-        app:layout_constraintBottom_toTopOf="@id/img2"
-        app:layout_constraintEnd_toEndOf="@id/img2"
-        app:layout_constraintStart_toStartOf="@id/img2" />
-    <ImageView
-        android:id="@+id/img2"
-        android:layout_width="48dp"
-        android:layout_height="600dp"
-        android:paddingHorizontal="9dp"
-        android:src="@drawable/img_light_saber_1_2"
-        android:layout_marginBottom="90dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_back"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_function"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/ic_hold"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_n_select"
+                    android:padding="12dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hold"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="@id/ic_hold"
+                    app:layout_constraintBottom_toBottomOf="@id/ic_hold"
+                    app:layout_constraintEnd_toStartOf="@id/ic_hold"
+                    android:layout_marginEnd="-4dp"
+                    android:textColor="@color/white"/>
+                <ImageView
+                    android:id="@+id/ic_touch"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_n_select"
+                    android:padding="12dp"
+                    android:layout_marginTop="-8dp"
+                    app:layout_constraintEnd_toEndOf="@id/ic_hold"
+                    app:layout_constraintTop_toBottomOf="@id/ic_hold"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/touch"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="@id/ic_touch"
+                    app:layout_constraintBottom_toBottomOf="@id/ic_touch"
+                    app:layout_constraintEnd_toStartOf="@id/ic_touch"
+                    android:layout_marginEnd="-4dp"
+                    android:textColor="@color/white"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="40dp"
+                android:layout_height="400dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:paddingHorizontal="5dp"
+                android:src="@drawable/img_light_saber_6_1"
+                android:layout_marginBottom="-425dp"
+                app:layout_constraintBottom_toTopOf="@id/img2"
+                app:layout_constraintEnd_toEndOf="@id/img2"
+                app:layout_constraintStart_toStartOf="@id/img2"
+                tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="48dp"
+                android:layout_height="600dp"
+                android:paddingHorizontal="9dp"
+                android:src="@drawable/img_light_saber_1_2"
+                android:layout_marginBottom="90dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

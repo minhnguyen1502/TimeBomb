@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_02"
+    android:background="@drawable/bg_04"
     android:id="@+id/background"
     android:layout_height="match_parent">
     <ImageView
@@ -29,7 +29,7 @@
         android:lines="1"
         android:maxLines="1"
         android:fontFamily="@font/inter_bold"
-        android:text="Chainsaw"
+        android:text="@string/chainsaw"
         android:textColor="@color/white"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
@@ -48,60 +48,80 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/ic_hold"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_n_select"
-        android:padding="12dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="@id/iv_background"
-        app:layout_constraintTop_toBottomOf="@id/iv_background"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hold"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="15sp"
-        app:layout_constraintTop_toTopOf="@id/ic_hold"
-        app:layout_constraintBottom_toBottomOf="@id/ic_hold"
-        app:layout_constraintEnd_toStartOf="@id/ic_hold"
-        android:layout_marginEnd="-4dp"
-        android:textColor="@color/white"/>
-
-    <ImageView
-        android:id="@+id/ic_touch"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_n_select"
-        android:padding="12dp"
-        android:layout_marginTop="-8dp"
-        app:layout_constraintEnd_toEndOf="@id/iv_background"
-        app:layout_constraintTop_toBottomOf="@id/ic_hold"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Touch"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="15sp"
-        app:layout_constraintTop_toTopOf="@id/ic_touch"
-        app:layout_constraintBottom_toBottomOf="@id/ic_touch"
-        app:layout_constraintEnd_toStartOf="@id/ic_touch"
-        android:layout_marginEnd="-4dp"
-        android:textColor="@color/white"/>
-
-
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="88dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="17dp"
-        android:src="@drawable/img_chainsaw_play_8"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_back"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ctl_function"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/ic_hold"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_n_select"
+                    android:padding="12dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hold"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="@id/ic_hold"
+                    app:layout_constraintBottom_toBottomOf="@id/ic_hold"
+                    app:layout_constraintEnd_toStartOf="@id/ic_hold"
+                    android:layout_marginEnd="-4dp"
+                    android:textColor="@color/white"/>
+                <ImageView
+                    android:id="@+id/ic_touch"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_n_select"
+                    android:padding="12dp"
+                    android:layout_marginTop="-8dp"
+                    app:layout_constraintEnd_toEndOf="@id/ic_hold"
+                    app:layout_constraintTop_toBottomOf="@id/ic_hold"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/touch"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="@id/ic_touch"
+                    app:layout_constraintBottom_toBottomOf="@id/ic_touch"
+                    app:layout_constraintEnd_toStartOf="@id/ic_touch"
+                    android:layout_marginEnd="-4dp"
+                    android:textColor="@color/white"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="300dp"
+                android:layout_height="600dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginTop="57dp"
+                android:src="@drawable/img_chainsaw_play_2"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

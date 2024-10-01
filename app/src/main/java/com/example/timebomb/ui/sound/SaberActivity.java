@@ -11,7 +11,6 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.MotionEvent;
@@ -20,12 +19,8 @@ import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.timebomb.R;
@@ -42,13 +37,13 @@ import java.util.List;
 
 public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBinding>{
 
-    private int img1, img2, sound;
     private MediaPlayer mediaPlayer;
     private boolean isHold = false;
     private boolean isTouch = false;
     List<BackgroundModel> backgroundList;
     int background;
     boolean isVibrate, isSound, isFlash;
+    private boolean isShow = false;
 
     @Override
     public ActivityPlaySoundLightSaberBinding getBinding() {
@@ -58,15 +53,15 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
 
     @Override
     public void initView() {
-        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, false);
-        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, false);
-        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, false);
+        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, true);
+        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, true);
+        isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, true);
         background = SPUtils.getInt(this, SPUtils.BG_SABER, R.drawable.bg_04);
         binding.background.setBackgroundResource(background);
         Intent i = getIntent();
-        img1 = i.getIntExtra("img_1", -1);
-        img2 = i.getIntExtra("img_2", -1);
-        sound = i.getIntExtra("sound", -1);
+        int img1 = i.getIntExtra("img_1", -1);
+        int img2 = i.getIntExtra("img_2", -1);
+        int sound = i.getIntExtra("sound", -1);
         if (img1 != -1) {
             binding.img1.setImageResource(img1);
         } else {
@@ -83,9 +78,11 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                 stopVibrate();
                 stopFlash();
                 binding.img1.setVisibility(View.INVISIBLE);
+                binding.ctlFunction.setVisibility(View.VISIBLE);
+
             });
         } else {
-            Toast.makeText(this, "No sound", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_sound), Toast.LENGTH_SHORT).show();
         }
         backgroundList = new ArrayList<>();
         backgroundList.add(new BackgroundModel(R.drawable.bg_01));
@@ -133,6 +130,8 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             if (isTouch) {
                 if (isSound) {
                     playSound();
+                } else {
+                    playSoundNoVolumn();
                 }
                 if (isVibrate) {
                     startVibrate();
@@ -148,7 +147,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                 int fullHeight = binding.img1.getHeight();
 
                 ValueAnimator animator = ValueAnimator.ofInt(0, fullHeight);
-                animator.setDuration(3000);
+                animator.setDuration(2000);
                 animator.setInterpolator(new DecelerateInterpolator());
 
                 animator.addUpdateListener(animation -> {
@@ -165,8 +164,10 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             if (isHold) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if (isSound){
+                        if (isSound) {
                             playSound();
+                        } else {
+                            playSoundNoVolumn();
                         }
                         if (isVibrate){
                             startVibrate();
@@ -174,24 +175,20 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         if (isFlash){
                             startFlash();
                         }
+                        binding.ivBack.setClickable(false);
+                        binding.ivBackground.setClickable(false);
                         mediaPlayer.setLooping(true);
                         binding.img1.setVisibility(View.VISIBLE);
-
                         binding.img1.setClipBounds(new Rect(0, 0, binding.img1.getWidth(), binding.img1.getHeight()));
-
                         int fullHeight = binding.img1.getHeight();
-
                         ValueAnimator animator = ValueAnimator.ofInt(0, fullHeight);
-                        animator.setDuration(3000);
+                        animator.setDuration(2000);
                         animator.setInterpolator(new DecelerateInterpolator());
-
                         animator.addUpdateListener(animation -> {
                             int currentHeight = (int) animation.getAnimatedValue();
                             binding.img1.setClipBounds(new Rect(0, fullHeight - currentHeight, binding.img1.getWidth(), fullHeight));
                         });
-
                         animator.start();
-
                         return true;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
@@ -199,7 +196,8 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         stopFlash();
                         mediaPlayer.setLooping(false);
                         binding.img1.setVisibility(View.INVISIBLE);
-
+                        binding.ivBack.setClickable(true);
+                        binding.ivBackground.setClickable(true);
                         stopVibrate();
                         return true;
                 }
@@ -209,10 +207,15 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
 
         binding.ivBack.setOnClickListener(v -> onBack());
 
-        binding.ivBackground.setOnClickListener(v -> dialogBackground());
+        binding.ivBackground.setOnClickListener(v -> {
+            if (!isShow){
+                dialogBackground();
+            }
+        });
     }
 
     private void dialogBackground() {
+        isShow = true;
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         DialogBackgroundBinding dialogBinding = DialogBackgroundBinding.inflate(getLayoutInflater());
         dialog.setContentView(dialogBinding.getRoot());
@@ -225,7 +228,27 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         dialog.setCanceledOnTouchOutside(true);
         int currentBackground = SPUtils.getInt(this, SPUtils.BG_SABER, -1);
 
-        int selectedPosition = 4;
+        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
+        dialogBinding.rcvBackground.setAdapter(adapter);
+        dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
+        dialogBinding.ivBack.setOnClickListener(v -> {
+            dialog.dismiss();
+            isShow = false;
+        });
+
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+            isShow = false;
+        }
+
+        dialog.setOnDismissListener(dialog1 -> isShow = false);
+        dialog.show();
+
+    }
+
+    @NonNull
+    private BackgroundAdapter getBackgroundAdapter(int currentBackground) {
+        int selectedPosition = 3;
         for (int i = 0; i < backgroundList.size(); i++) {
             if (backgroundList.get(i).getImg() == currentBackground) {
                 selectedPosition = i;
@@ -233,28 +256,25 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             }
         }
 
-        BackgroundAdapter adapter = new BackgroundAdapter(this, backgroundList,selectedPosition, (position, backgroundModel) -> {
+        return new BackgroundAdapter(this, backgroundList,selectedPosition, (position, backgroundModel) -> {
             binding.background.setBackgroundResource(backgroundModel.getImg());
             SPUtils.setInt(this, SPUtils.BG_SABER, backgroundModel.getImg());
         });
-        dialogBinding.rcvBackground.setAdapter(adapter);
-        dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
-        dialogBinding.ivBack.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-        dialog.show();
-
     }
 
-    @SuppressLint("SetTextI18n")
     private void playSound() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
         }
+        binding.ctlFunction.setVisibility(View.GONE);
+
+    }
+    private void playSoundNoVolumn() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+            mediaPlayer.setVolume(0, 0);
+        }
+        binding.ctlFunction.setVisibility(View.GONE);
 
     }
 
@@ -264,6 +284,8 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
         }
+        binding.ctlFunction.setVisibility(View.VISIBLE);
+
     }
 
     public void stopVibrate() {
@@ -289,7 +311,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         try {
             if (cameraManager == null) {
                 cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-                cameraId = cameraManager.getCameraIdList()[0]; // Get the ID of the back-facing camera
+                cameraId = cameraManager.getCameraIdList()[0];
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 cameraManager.setTorchMode(cameraId, turnOn);
@@ -302,15 +324,15 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         isBlinking = true;
         new Thread(() -> {
             while (isBlinking) {
-                toggleFlashlight(true); // Turn on
+                toggleFlashlight(true);
                 try {
-                    Thread.sleep(300);  // Adjust this value to control blink speed
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                toggleFlashlight(false); // Turn off
+                toggleFlashlight(false);
                 try {
-                    Thread.sleep(300);  // Adjust this value to control blink speed
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -320,7 +342,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
 
     private void stopFlash() {
         isBlinking = false;
-        toggleFlashlight(false);  // Make sure flashlight is off when stopping
+        toggleFlashlight(false);
     }
 
     private boolean wasPlaying = false;

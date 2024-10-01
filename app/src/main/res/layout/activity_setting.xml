@@ -29,7 +29,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="@color/white"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
@@ -50,6 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_vibration"
@@ -79,10 +81,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="Vibration"
+            android:text="@string/vibration"
             android:textColor="@color/white"
             android:textSize="16sp"
-
             app:layout_constraintBottom_toBottomOf="@id/ic_vibration"
             app:layout_constraintStart_toEndOf="@id/ic_vibration"
             app:layout_constraintTop_toTopOf="@id/ic_vibration" />
@@ -129,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="Splah"
+            android:text="@string/splash"
             android:textColor="@color/white"
             android:textSize="16sp"
 
@@ -178,7 +179,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="Sound"
+            android:text="@string/sound"
             android:textColor="@color/white"
             android:textSize="16sp"
 
@@ -226,7 +227,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="Language"
+            android:text="@string/language"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/ic_language"
@@ -303,7 +304,7 @@
             android:layout_marginVertical="4dp"
             android:layout_marginStart="4dp"
             android:padding="12dp"
-            android:src="@drawable/ic_setting_share"
+            android:src="@drawable/ic_setting_rate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -366,6 +367,7 @@
             android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

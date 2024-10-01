@@ -1,14 +1,8 @@
 package com.example.timebomb.ui.sound;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.timebomb.R;
@@ -24,7 +18,6 @@ import java.util.List;
 
 public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
 
-    private String type;
     private List<SoundModel> bomb;
     private List<SoundModel> taser;
     private List<Saber> saber;
@@ -41,13 +34,13 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
     public void initView() {
 
         Intent i = getIntent();
-        type = i.getStringExtra("type");
+        String type = i.getStringExtra("type");
         binding.rcvSound.setLayoutManager(new GridLayoutManager(this, 2));
         initData();
         if (type != null) {
             switch (type) {
                 case "bomb":
-                    binding.title.setText("Time Bomb");
+                    binding.title.setText(getString(R.string.time_bomb));
                     binding.rcvSound.setAdapter(new SoundAdapter(bomb, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, BombActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
@@ -56,7 +49,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "taser":
-                    binding.title.setText("Taser Gun");
+                    binding.title.setText(getString(R.string.taser_gun));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(taser, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, TaserActivity.class);
@@ -67,7 +60,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "chainsaw":
-                    binding.title.setText("Chainsaw");
+                    binding.title.setText(getString(R.string.chainsaw));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(chainsaw, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, ChainsawActivity.class);
@@ -77,7 +70,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "flame":
-                    binding.title.setText("Flamethrower");
+                    binding.title.setText(getString(R.string.flamethrower));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(flame, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, FlameActivity.class);
@@ -87,7 +80,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "crack":
-                    binding.title.setText("Crack Screen");
+                    binding.title.setText(getString(R.string.crack_screen));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(screen, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, CrackScreenActivity.class);
@@ -98,7 +91,7 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 case "saber":
-                    binding.title.setText("Light Saber");
+                    binding.title.setText(getString(R.string.light_saber));
 
                     binding.rcvSound.setAdapter(new SaberAdapter(saber, this, (position, saber) -> {
                         Intent i1 = new Intent(this, SaberActivity.class);
@@ -109,11 +102,11 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                     }));
                     break;
                 default:
-                    Toast.makeText(this, "Invalid type", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.invalid_type), Toast.LENGTH_SHORT).show();
                     break;
             }
         } else {
-            Toast.makeText(this, "Something Wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
         }
 
         binding.ivBack.setOnClickListener(v -> onBack());

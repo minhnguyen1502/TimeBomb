@@ -34,7 +34,7 @@
             android:layout_marginHorizontal="4dp"
             android:includeFontPadding="false"
             android:text="@string/english"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:fontFamily="@font/inter_medium"
             app:layout_constraintBottom_toBottomOf="parent"

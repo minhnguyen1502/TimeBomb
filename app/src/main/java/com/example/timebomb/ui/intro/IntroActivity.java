@@ -34,7 +34,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     public void initView() {
         viewPager = binding.viewPager2;
 
-        content = new String[]{"Surprise & Shock With Explosive Sounds", "Choose Your Warzone Background", "Many Unique Bomb Sound To Prank"};
+        content = new String[]{getString(R.string.surprise_shock_with_explosive_sounds), getString(R.string.choose_your_warzone_background), getString(R.string.many_unique_bomb_sound_to_prank)};
 
         dots = new ImageView[]{binding.ivCircle01, binding.ivCircle02, binding.ivCircle03};
 

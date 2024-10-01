@@ -33,7 +33,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Background"
+        android:text="@string/background"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:fontFamily="@font/inter_bold"

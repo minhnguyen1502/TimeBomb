@@ -28,7 +28,7 @@
         android:id="@+id/custom_notification_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="You are using Crack Screen"
+        android:text="@string/you_are_using_crack_screen"
         android:textColor="@color/black"
         android:fontFamily="@font/inter_medium"
         android:textSize="16sp"
@@ -47,7 +47,7 @@
         android:textSize="15sp"
         android:fontFamily="@font/inter_medium"
         android:shape="rectangle"
-        android:text="Stop"
+        android:text="@string/stop"
         android:textColor="#000000"
         android:textStyle="bold" />
 </LinearLayout>

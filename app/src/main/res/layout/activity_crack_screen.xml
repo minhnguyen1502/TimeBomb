@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_02"
+    android:background="@drawable/bg_04"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/iv_back"
@@ -27,7 +27,7 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:maxLines="1"
-        android:text="Crack Screen"
+        android:text="@string/crack_screen"
         android:textColor="@color/white"
         android:textSize="21sp"
         android:fontFamily="@font/inter_bold"
@@ -54,11 +54,13 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="55dp"
         android:layout_marginVertical="44dp"
+        android:contentDescription="simple"
         android:src="@drawable/img_phone_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_apply"
-        app:layout_constraintTop_toBottomOf="@id/title"/>
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/btn_apply"
@@ -67,7 +69,7 @@
         android:background="@drawable/bg_btn_start"
         android:gravity="center"
         android:paddingVertical="8dp"
-        android:text="Apply"
+        android:text="@string/apply"
         android:fontFamily="@font/inter_bold"
         android:textColor="#F6C941"
         android:textSize="20sp"
