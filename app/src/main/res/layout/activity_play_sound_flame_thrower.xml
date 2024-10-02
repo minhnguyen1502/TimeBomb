@@ -76,10 +76,10 @@
                 android:layout_width="600dp"
                 android:layout_height="600dp"
                 android:layout_marginBottom="-100dp"
-                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/img"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/img"
+                app:layout_constraintStart_toStartOf="@id/img"
+                android:visibility="gone"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="flame.json"
                 app:lottie_loop="true" />

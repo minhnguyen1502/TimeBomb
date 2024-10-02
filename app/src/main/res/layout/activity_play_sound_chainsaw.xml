@@ -118,7 +118,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="60dp"
                 android:layout_marginTop="57dp"
-                android:src="@drawable/img_chainsaw_play_2"
+                android:src="@drawable/img_chainsaw_play_8"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

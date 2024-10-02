@@ -50,15 +50,15 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
         if (!isFinishing() && !isDestroyed()) {
 
-            if (!Utils.isLanguageSelected()) {
+//            if (!Utils.isLanguageSelected()) {
                 Intent intent = new Intent(this, LanguageStartActivity.class);
                 startActivity(intent);
                 finish();
-            } else {
-                Intent intent = new Intent(this, IntroActivity.class);
-                startActivity(intent);
-                finish();
-            }
+//            } else {
+//                Intent intent = new Intent(this, IntroActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
         }
     }
     @Override

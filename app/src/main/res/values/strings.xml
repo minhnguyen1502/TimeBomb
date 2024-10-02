@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">BaseAppJava2</string>
+    <string name="app_name" translatable="false">Time Bomb</string>
 
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">French</string>
@@ -80,5 +80,6 @@
     <string name="continues">Continue</string>
     <string name="something_wrong">Something Wrong</string>
     <string name="invalid_type">Invalid type</string>
+    <string name="please_choose_your_language">please choose your language</string>
 
 </resources>

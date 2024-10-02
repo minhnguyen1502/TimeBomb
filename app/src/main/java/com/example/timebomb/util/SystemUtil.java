@@ -38,7 +38,7 @@ public class SystemUtil {
 
     public static String getPreLanguage(Context mContext) {
         SharedPreferences preferences = mContext.getSharedPreferences("data", Context.MODE_PRIVATE);
-        return preferences.getString("KEY_LANGUAGE", "en");
+        return preferences.getString("KEY_LANGUAGE", "");
     }
 
     public static void setPreLanguage(Context context, String language) {

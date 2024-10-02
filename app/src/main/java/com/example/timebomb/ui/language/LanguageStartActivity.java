@@ -1,5 +1,6 @@
 package com.example.timebomb.ui.language;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Toast;
 
@@ -46,10 +47,10 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         binding.ivCheck.setOnClickListener(view -> {
 
             if (codeLang.isEmpty()) {
-                Toast.makeText(LanguageStartActivity.this, "please choose your language", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LanguageStartActivity.this, R.string.please_choose_your_language, Toast.LENGTH_SHORT).show();
             } else {
                 SystemUtil.saveLocale(getBaseContext(), codeLang);
-                Utils.setLanguageSelected(true);
+//                Utils.setLanguageSelected(true);
                 startNextActivity(IntroActivity.class, null);
                 finishAffinity();
             }
@@ -61,23 +62,28 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
     public void onBack() {
         finishAffinity();
     }
-
+    boolean isDeviceLangInList = false;
+    @SuppressLint("SuspiciousIndentation")
     private void initData() {
         listLanguage = new ArrayList<>();
-        listLanguage.add(new LanguageModel("Spanish", "es"));
         listLanguage.add(new LanguageModel("English", "en"));
         listLanguage.add(new LanguageModel("China", "zh"));
         listLanguage.add(new LanguageModel("French", "fr"));
         listLanguage.add(new LanguageModel("German", "de"));
-        listLanguage.add(new LanguageModel("Portuguese", "pt"));
         listLanguage.add(new LanguageModel("Hindi", "hi"));
         listLanguage.add(new LanguageModel("Indonesia", "in"));
+        listLanguage.add(new LanguageModel("Portuguese", "pt"));
+        listLanguage.add(new LanguageModel("Spanish", "es"));
 
-
+        // Lấy mã ngôn ngữ của thiết bị
         String deviceLanguageCode = Locale.getDefault().getLanguage();
+        // Lấy ngôn ngữ đã được lưu trước đó
         String previousLanguageCode = SystemUtil.getPreLanguage(getBaseContext());
+        // Kiểm tra số lần mở app
         if (SharePrefUtils.getCountOpenApp(this) > 1 && !previousLanguageCode.isEmpty()) {
-//            Collections.sort(listLanguage, (lang1, lang2) -> lang1.getName().compareToIgnoreCase(lang2.getName()));
+            // Lần tiếp theo: Sắp xếp danh sách theo thứ tự bảng chữ cái
+            Collections.sort(listLanguage, (lang1, lang2) -> lang1.getName().compareToIgnoreCase(lang2.getName()));
+            // Đẩy ngôn ngữ đã chọn trước đó lên đầu
             for (int i = 0; i < listLanguage.size(); i++) {
                 if (listLanguage.get(i).getCode().equals(previousLanguageCode)) {
                     LanguageModel selectedLanguage = listLanguage.remove(i);
@@ -85,29 +91,24 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
                     break;
                 }
             }
-        } else {
-            boolean isDeviceLangInList = false;
-            for (int i = 0; i < listLanguage.size(); i++) {
-                if (listLanguage.get(i).getCode().equals(deviceLanguageCode)) {
-                    LanguageModel deviceLanguage = listLanguage.remove(i);
-                    listLanguage.add(0, deviceLanguage);
-                    isDeviceLangInList = true;
-                    break;
-                }
-            }
-            if (!isDeviceLangInList) {
-                for (int i = 0; i < listLanguage.size(); i++) {
-                    if (listLanguage.get(i).getCode().equals("en")) {
-                        LanguageModel englishLanguage = listLanguage.remove(i);
-                        listLanguage.add(0, englishLanguage);
-                        break;
-                    }
-                }
-            }
-        }
-        if (listLanguage.size() > 1) {
-            Collections.sort(listLanguage.subList(1, listLanguage.size()), (lang1, lang2) -> lang1.getName().compareToIgnoreCase(lang2.getName()));
-        }
+        } else
 
+        for (int i = 0; i < listLanguage.size(); i++) {
+            if (listLanguage.get(i).getCode().equals(deviceLanguageCode)) {
+                LanguageModel deviceLanguage = listLanguage.remove(i);
+                listLanguage.add(0, deviceLanguage);
+                isDeviceLangInList = true;
+                break;
+            }
+        }
+        for (int i = 0; i < listLanguage.size(); i++) {
+            if (listLanguage.get(i).getCode().equals("en")) {
+                LanguageModel englishLanguage = listLanguage.remove(i);
+                listLanguage.add(0, englishLanguage);
+                break;
+            }
+        }
     }
 }
+
+

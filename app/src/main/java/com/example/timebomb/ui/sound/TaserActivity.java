@@ -193,7 +193,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.GONE);
-                }else if (position == 7){
+                } else if (position == 7) {
                     binding.imgAnim2.setVisibility(View.GONE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.VISIBLE);
@@ -223,7 +223,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.GONE);
-                }else if (position == 7){
+                } else if (position == 7) {
                     binding.imgAnim2.setVisibility(View.GONE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.VISIBLE);
@@ -241,13 +241,21 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (isSound) {
-                            playSound();
+                            if (mediaPlayer != null) {
+                                mediaPlayer.start();
+                            }
+                            binding.ctlFunction.setVisibility(View.GONE);
                         } else {
-                            playSoundNoVolumn();
+                            if (mediaPlayer != null) {
+                                mediaPlayer.start();
+                                mediaPlayer.setVolume(0, 0);
+                            }
+                            binding.ctlFunction.setVisibility(View.GONE);
                         }
                         if (isVibrate) {
                             startVibrate();
                         }
+
                         if (isFlash) {
                             startFlash();
                         }
@@ -258,7 +266,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                             binding.imgAnim2.setVisibility(View.VISIBLE);
                             binding.imgAnim.setVisibility(View.GONE);
                             binding.imgAnim3.setVisibility(View.GONE);
-                        }else if (position == 7){
+                        } else if (position == 7) {
                             binding.imgAnim2.setVisibility(View.GONE);
                             binding.imgAnim.setVisibility(View.GONE);
                             binding.imgAnim3.setVisibility(View.VISIBLE);
@@ -291,9 +299,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (isSound) {
-                            playSound();
+                            if (mediaPlayer != null) {
+                                mediaPlayer.start();
+                            }
+                            binding.ctlFunction.setVisibility(View.GONE);
                         } else {
-                            playSoundNoVolumn();
+                            if (mediaPlayer != null) {
+                                mediaPlayer.start();
+                                mediaPlayer.setVolume(0, 0);
+                            }
+                            binding.ctlFunction.setVisibility(View.GONE);
                         }
                         if (isVibrate) {
                             startVibrate();
@@ -306,7 +321,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                             binding.imgAnim2.setVisibility(View.VISIBLE);
                             binding.imgAnim.setVisibility(View.GONE);
                             binding.imgAnim3.setVisibility(View.GONE);
-                        }else if (position == 7){
+                        } else if (position == 7) {
                             binding.imgAnim2.setVisibility(View.GONE);
                             binding.imgAnim.setVisibility(View.GONE);
                             binding.imgAnim3.setVisibility(View.VISIBLE);
@@ -336,7 +351,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         binding.ivBack.setOnClickListener(v -> onBack());
 
         binding.ivBackground.setOnClickListener(v -> {
-            if (!isShow){
+            if (!isShow) {
                 dialogBackground();
             }
         });
@@ -395,18 +410,36 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
     private void playSound() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
+            new android.os.Handler().postDelayed(() -> {
+                stopSound();
+                stopFlash();
+                stopVibrate();
+                binding.imgAnim.setVisibility(View.GONE);
+                binding.imgAnim2.setVisibility(View.GONE);
+                binding.imgAnim3.setVisibility(View.GONE);
+            }, 500);
         }
         binding.ctlFunction.setVisibility(View.GONE);
 
     }
+
     private void playSoundNoVolumn() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
             mediaPlayer.setVolume(0, 0);
+            new android.os.Handler().postDelayed(() -> {
+                stopSound();
+                stopFlash();
+                stopVibrate();
+                binding.imgAnim.setVisibility(View.GONE);
+                binding.imgAnim2.setVisibility(View.GONE);
+                binding.imgAnim3.setVisibility(View.GONE);
+            }, 500);
         }
         binding.ctlFunction.setVisibility(View.GONE);
 
     }
+
     @SuppressLint("SetTextI18n")
     private void stopSound() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
@@ -463,7 +496,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                     binding.imgAnim2.setVisibility(View.VISIBLE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.GONE);
-                }else if (position == 7){
+                } else if (position == 7) {
                     binding.imgAnim2.setVisibility(View.GONE);
                     binding.imgAnim.setVisibility(View.GONE);
                     binding.imgAnim3.setVisibility(View.VISIBLE);
@@ -474,6 +507,14 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
 
                 }
             }
+        } else if (shake == 0) {
+            stopSound();
+            stopVibrate();
+            binding.imgAnim.setVisibility(View.GONE);
+            binding.imgAnim2.setVisibility(View.GONE);
+            binding.imgAnim3.setVisibility(View.GONE);
+            stopFlash();
+            binding.ctlFunction.setVisibility(View.VISIBLE);
 
         }
     }
@@ -524,11 +565,14 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         isBlinking = false;
         toggleFlashlight(false);
     }
+
     private boolean wasPlaying = false;
 
     @Override
     public void onBack() {
         sensorManager.unregisterListener(this);
+        stopSound();
+        stopFlash();
         stopVibrate();
         finish();
     }
@@ -540,7 +584,9 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
             mediaPlayer = null;
         }
         sensorManager.unregisterListener(this);
-
+        stopSound();
+        stopFlash();
+        stopVibrate();
         super.onDestroy();
     }
 
@@ -550,13 +596,13 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         if (mediaPlayer != null && wasPlaying) {
-            if (isSound){
+            if (isSound) {
                 mediaPlayer.start();
             }
             if (isVibrate) {
                 startVibrate();
             }
-            if (isFlash){
+            if (isFlash) {
                 startFlash();
             }
         }

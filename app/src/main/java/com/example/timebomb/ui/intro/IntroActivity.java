@@ -80,7 +80,6 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     private void changeContentInit(int position) {
-        binding.tvContent.setText(content[position]);
 
         for (int i = 0; i < 3; i++) {
             if (i == position) dots[i].setImageResource(R.drawable.ic_intro_s);
@@ -105,16 +104,15 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     public void goToNextScreen() {
-        if(checkOverlayPermission()){
-            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else {
+//        if(checkOverlayPermission()){
+//            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        } else {
             Intent intent = new Intent(IntroActivity.this, PermissionActivity.class);
             startActivity(intent);
 
-        }
+//        }
     }
 
     public boolean checkOverlayPermission() {

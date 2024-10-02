@@ -3,6 +3,7 @@ package com.example.timebomb.ui.sound;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -28,8 +29,9 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     private boolean isCountingDown = false;
     private MediaPlayer mediaPlayer;
     boolean isVibrate, isSound, isFlash;
-    long currentTimeInSeconds = 1;
+    long currentTimeInSeconds = 0;
     private boolean isBom = false;
+    private boolean isPlay = false;
 
     @Override
     public ActivityPlaySoundTimeBombBinding getBinding() {
@@ -38,6 +40,9 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     @Override
     public void initView() {
+        currentTimeInSeconds = 5;
+        minutes = currentTimeInSeconds / 60;
+        seconds = currentTimeInSeconds % 60;
         isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, true);
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, true);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, true);
@@ -74,7 +79,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     private void startCountdown(long remainingTime) {
         isCountingDown = true;
-
+        isPlay = true;
         currentTimeInSeconds = remainingTime;
         minutes = remainingTime / 60;
         seconds = remainingTime % 60;
@@ -91,7 +96,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
                 binding.btnPlus.setVisibility(View.INVISIBLE);
                 binding.btnMinus.setVisibility(View.INVISIBLE);
                 binding.btnStart.setVisibility(View.INVISIBLE);
-                binding.time.setTextColor(android.graphics.Color.parseColor("#DB0202"));
+                binding.time.setTextColor(Color.parseColor("#DB0202"));
                 binding.time.setBackgroundResource(R.drawable.bg_start_countdown);
                 currentTimeInSeconds = millisUntilFinished / 1000;
                 Log.e("time: ", currentTimeInSeconds + "");
@@ -99,14 +104,17 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
             @Override
             public void onFinish() {
+                isPlay = false;
                 isCountingDown = false;
-                minutes = 0;
-                seconds = 0;
+                currentTimeInSeconds = 5;
+                minutes = currentTimeInSeconds / 60;
+                seconds = currentTimeInSeconds % 60;
+                updateTimeDisplay();
                 bomb();
                 binding.btnPlus.setVisibility(View.VISIBLE);
                 binding.btnMinus.setVisibility(View.VISIBLE);
                 binding.btnStart.setVisibility(View.VISIBLE);
-                binding.time.setTextColor(android.graphics.Color.parseColor("#FFFFFF"));
+                binding.time.setTextColor(Color.parseColor("#FFFFFF"));
                 binding.time.setBackgroundResource(0);
             }
         }.start();
@@ -224,6 +232,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     }
 
     private boolean wasPlaying = false;
+    private boolean pause = false;
 
     @Override
     protected void onPause() {
@@ -246,7 +255,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     @Override
     protected void onResume() {
         super.onResume();
-        if (currentTimeInSeconds > 0 && !isCountingDown) {
+        if (currentTimeInSeconds > 0 && !isCountingDown && isPlay) {
             startCountdown(currentTimeInSeconds);
         }
         if (mediaPlayer != null && wasPlaying) {

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 
 import com.example.timebomb.R;
+import com.example.timebomb.util.SPUtils;
 
 public class CrackScreen extends Service {
     private static final int NOTIFICATION_ID = 1;
@@ -34,6 +35,7 @@ public class CrackScreen extends Service {
     private int imageResId;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
+    private boolean isSound, isVibrate;
 
     @Override
     public IBinder onBind(Intent paramIntent) {
@@ -43,7 +45,8 @@ public class CrackScreen extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, true);
+        isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 Toast.makeText(this, "Permission required to show overlay", Toast.LENGTH_SHORT).show();
@@ -59,15 +62,7 @@ public class CrackScreen extends Service {
         overlayView = new View(this);
         overlayView.setBackgroundColor(0x00000000);
 
-        WindowManager.LayoutParams paramsOverlay = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                        ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-                        : WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT
-        );
+        WindowManager.LayoutParams paramsOverlay = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
 
         paramsOverlay.gravity = Gravity.TOP | Gravity.LEFT;
 
@@ -85,8 +80,7 @@ public class CrackScreen extends Service {
     private void startForegroundService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Tạo notification channel
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID, "Crack Screen Service", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Crack Screen Service", NotificationManager.IMPORTANCE_LOW);
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager != null) {
                 manager.createNotificationChannel(channel);
@@ -100,12 +94,7 @@ public class CrackScreen extends Service {
 
         notificationLayout.setOnClickPendingIntent(R.id.btn_stop, stopPendingIntent);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.img_logo)
-                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
-                .setCustomContentView(notificationLayout)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .build();
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.img_logo).setStyle(new NotificationCompat.DecoratedCustomViewStyle()).setCustomContentView(notificationLayout).setPriority(NotificationCompat.PRIORITY_LOW).build();
 
         startForeground(NOTIFICATION_ID, notification);
     }
@@ -119,28 +108,25 @@ public class CrackScreen extends Service {
 
     private void showCrackEffect() {
         mImage.setImageResource(imageResId);
-        WindowManager.LayoutParams paramsImage = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                        ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-                        : WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                PixelFormat.TRANSLUCENT
-        );
+        WindowManager.LayoutParams paramsImage = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, PixelFormat.TRANSLUCENT);
 
         paramsImage.gravity = Gravity.CENTER;
 
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         windowManager.addView(mImage, paramsImage);
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
+        if (isSound) {
+            if (mediaPlayer != null) {
+                mediaPlayer.start();
+            }
+        }
+        if (isVibrate) {
+            if (vibrator != null) {
+                vibrator.vibrate(500);
+            }
         }
 
-        // Vibrate
-        if (vibrator != null) {
-            vibrator.vibrate(500); // Vibrate for 500ms
-        }
+        Toast.makeText(this, "vibrate: "+isVibrate, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "sound: "+isSound, Toast.LENGTH_SHORT).show();
         overlayView.setVisibility(View.GONE);
     }
 
@@ -150,6 +136,6 @@ public class CrackScreen extends Service {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         if (mImage != null) windowManager.removeView(mImage);
         if (overlayView != null) windowManager.removeView(overlayView);
-        if (mediaPlayer != null) mediaPlayer.release();  // Release media player resources
+        if (mediaPlayer != null) mediaPlayer.release();
     }
 }

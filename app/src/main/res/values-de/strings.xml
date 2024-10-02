@@ -68,4 +68,8 @@
     <string name="many_unique_bomb_sound_to_prank">Viele einzigartige Bombengeräusche zum Streichen</string>
     <string name="no_sound">Kein Ton</string>
     <string name="continues">Weiter</string>
+    <string name="something_wrong">Etwas ist falsch</string>
+    <string name="invalid_type">Ungültiger Typ</string>
+    <string name="please_choose_your_language">Bitte wählen Sie Ihre Sprache</string>
+
 </resources>
