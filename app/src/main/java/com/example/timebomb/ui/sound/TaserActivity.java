@@ -13,6 +13,7 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
@@ -40,18 +41,14 @@ import java.util.List;
 public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding> implements SensorEventListener {
     private int position;
     private MediaPlayer mediaPlayer;
-    private boolean isHold = false;
+    private boolean isHold = true;
     private boolean isTouch = false;
     private boolean isShake = false;
     List<BackgroundModel> backgroundList;
     int background;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private float accelVal;
-    private float accelLast;
-    private float shake;
     boolean isVibrate, isSound, isFlash;
-    private boolean isShow = false;
 
     @Override
     public ActivityPlaySoundTaserGunBinding getBinding() {
@@ -110,10 +107,10 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        accelVal = SensorManager.GRAVITY_EARTH;
-        accelLast = SensorManager.GRAVITY_EARTH;
-        shake = 0.00f;
+        if (sensorManager!= null){
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+        }
 
         backgroundList = new ArrayList<>();
         backgroundList.add(new BackgroundModel(R.drawable.bg_01));
@@ -127,14 +124,19 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         backgroundList.add(new BackgroundModel(R.drawable.bg_09));
         backgroundList.add(new BackgroundModel(R.drawable.bg_10));
         backgroundList.add(new BackgroundModel(R.drawable.bg_11));
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_TASER, -1);
+
+        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
+        binding.rcvBackground.setAdapter(adapter);
+        binding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void bindView() {
         binding.icHold.setImageResource(isHold ? R.drawable.ic_select : R.drawable.ic_n_select);
-        binding.icSingle.setImageResource(isHold ? R.drawable.ic_select : R.drawable.ic_n_select);
-        binding.icShake.setImageResource(isHold ? R.drawable.ic_select : R.drawable.ic_n_select);
+        binding.icSingle.setImageResource(isTouch ? R.drawable.ic_select : R.drawable.ic_n_select);
+        binding.icShake.setImageResource(isShake ? R.drawable.ic_select : R.drawable.ic_n_select);
 
         binding.icSingle.setOnClickListener(v -> {
             isHold = false;
@@ -150,6 +152,9 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         });
 
         binding.icShake.setOnClickListener(v -> {
+            if (sensorManager == null){
+                Toast.makeText(this, "This device does not have a sensor.", Toast.LENGTH_SHORT).show();
+            }
             isHold = false;
             binding.icHold.setImageResource(R.drawable.ic_n_select);
             isTouch = false;
@@ -179,8 +184,26 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
             if (isTouch) {
                 if (isSound) {
                     playSound();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+                        binding.imgAnim.setVisibility(View.GONE);
+                        binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
+                    }, 500);
                 } else {
                     playSoundNoVolumn();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+                        binding.imgAnim.setVisibility(View.GONE);
+                        binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
+                    }, 500);
                 }
                 if (isVibrate) {
                     startVibrate();
@@ -210,8 +233,26 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
             if (isTouch) {
                 if (isSound) {
                     playSound();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+                        binding.imgAnim.setVisibility(View.GONE);
+                        binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
+                    }, 500);
                 } else {
                     playSoundNoVolumn();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+                        binding.imgAnim.setVisibility(View.GONE);
+                        binding.imgAnim2.setVisibility(View.GONE);
+                        binding.imgAnim3.setVisibility(View.GONE);
+                    }, 500);
                 }
                 if (isVibrate) {
                     startVibrate();
@@ -241,21 +282,13 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (isSound) {
-                            if (mediaPlayer != null) {
-                                mediaPlayer.start();
-                            }
-                            binding.ctlFunction.setVisibility(View.GONE);
+                            playSound();
                         } else {
-                            if (mediaPlayer != null) {
-                                mediaPlayer.start();
-                                mediaPlayer.setVolume(0, 0);
-                            }
-                            binding.ctlFunction.setVisibility(View.GONE);
+                            playSoundNoVolumn();
                         }
                         if (isVibrate) {
                             startVibrate();
                         }
-
                         if (isFlash) {
                             startFlash();
                         }
@@ -299,16 +332,9 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (isSound) {
-                            if (mediaPlayer != null) {
-                                mediaPlayer.start();
-                            }
-                            binding.ctlFunction.setVisibility(View.GONE);
+                            playSound();
                         } else {
-                            if (mediaPlayer != null) {
-                                mediaPlayer.start();
-                                mediaPlayer.setVolume(0, 0);
-                            }
-                            binding.ctlFunction.setVisibility(View.GONE);
+                            playSoundNoVolumn();
                         }
                         if (isVibrate) {
                             startVibrate();
@@ -351,43 +377,17 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         binding.ivBack.setOnClickListener(v -> onBack());
 
         binding.ivBackground.setOnClickListener(v -> {
-            if (!isShow) {
-                dialogBackground();
-            }
+            binding.view.setVisibility(View.VISIBLE);
+            binding.ctlBackground.setVisibility(View.VISIBLE);
         });
-    }
-
-    private void dialogBackground() {
-        isShow = true;
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        DialogBackgroundBinding dialogBinding = DialogBackgroundBinding.inflate(getLayoutInflater());
-        dialog.setContentView(dialogBinding.getRoot());
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG_TASER, -1);
-
-        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
-        dialogBinding.rcvBackground.setAdapter(adapter);
-        dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
-        dialogBinding.ivBack.setOnClickListener(v -> {
-            dialog.dismiss();
-            isShow = false;
+        binding.close.setOnClickListener(v -> {
+            binding.ctlBackground.setVisibility(View.GONE);
+            binding.view.setVisibility(View.GONE);
         });
-
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-            isShow = false;
-        }
-
-        dialog.setOnDismissListener(dialog1 -> isShow = false);
-
-        dialog.show();
-
+        binding.view.setOnClickListener(v -> {
+            binding.ctlBackground.setVisibility(View.GONE);
+            binding.view.setVisibility(View.GONE);
+        });
     }
 
     @NonNull
@@ -410,14 +410,6 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
     private void playSound() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
-            new android.os.Handler().postDelayed(() -> {
-                stopSound();
-                stopFlash();
-                stopVibrate();
-                binding.imgAnim.setVisibility(View.GONE);
-                binding.imgAnim2.setVisibility(View.GONE);
-                binding.imgAnim3.setVisibility(View.GONE);
-            }, 500);
         }
         binding.ctlFunction.setVisibility(View.GONE);
 
@@ -427,14 +419,6 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         if (mediaPlayer != null) {
             mediaPlayer.start();
             mediaPlayer.setVolume(0, 0);
-            new android.os.Handler().postDelayed(() -> {
-                stopSound();
-                stopFlash();
-                stopVibrate();
-                binding.imgAnim.setVisibility(View.GONE);
-                binding.imgAnim2.setVisibility(View.GONE);
-                binding.imgAnim3.setVisibility(View.GONE);
-            }, 500);
         }
         binding.ctlFunction.setVisibility(View.GONE);
 
@@ -474,13 +458,9 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
         float y = event.values[1];
         float z = event.values[2];
 
-        accelLast = accelVal;
-        accelVal = (float) Math.sqrt((x * x) + (y * y) + (z * z));
-        float delta = accelVal - accelLast;
-        shake = shake * 0.9f + delta;
-
-        if (shake > 6) {
-            if (isShake) {
+        float shake = (float) Math.sqrt((x * x) + (y * y) + (z * z));
+        if (isShake) {
+            if (shake > 12f) {
                 if (isSound) {
                     playSound();
                 } else {
@@ -506,15 +486,16 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
                     binding.imgAnim3.setVisibility(View.GONE);
 
                 }
+            }else {
+                stopSound();
+                stopFlash();
+                stopVibrate();
+                binding.ctlFunction.setVisibility(View.VISIBLE);
+                binding.imgAnim.setVisibility(View.GONE);
+                binding.imgAnim2.setVisibility(View.GONE);
+                binding.imgAnim3.setVisibility(View.GONE);
+
             }
-        } else if (shake == 0) {
-            stopSound();
-            stopVibrate();
-            binding.imgAnim.setVisibility(View.GONE);
-            binding.imgAnim2.setVisibility(View.GONE);
-            binding.imgAnim3.setVisibility(View.GONE);
-            stopFlash();
-            binding.ctlFunction.setVisibility(View.VISIBLE);
 
         }
     }
@@ -571,8 +552,6 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
     @Override
     public void onBack() {
         sensorManager.unregisterListener(this);
-        stopSound();
-        stopFlash();
         stopVibrate();
         finish();
     }
@@ -584,9 +563,7 @@ public class TaserActivity extends BaseActivity<ActivityPlaySoundTaserGunBinding
             mediaPlayer = null;
         }
         sensorManager.unregisterListener(this);
-        stopSound();
-        stopFlash();
-        stopVibrate();
+
         super.onDestroy();
     }
 

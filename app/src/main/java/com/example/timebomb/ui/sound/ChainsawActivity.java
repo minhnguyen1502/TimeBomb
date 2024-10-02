@@ -1,5 +1,7 @@
 package com.example.timebomb.ui.sound;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.MotionEvent;
@@ -34,7 +37,7 @@ import java.util.List;
 
 public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBinding> {
     private MediaPlayer mediaPlayer;
-    private boolean isHold = false;
+    private boolean isHold = true;
     private boolean isTouch = false;
     boolean isVibrate, isSound, isFlash;
     private boolean isShow = false;
@@ -84,13 +87,18 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
         backgroundList.add(new BackgroundModel(R.drawable.bg_09));
         backgroundList.add(new BackgroundModel(R.drawable.bg_10));
         backgroundList.add(new BackgroundModel(R.drawable.bg_11));
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_CHAINSAW, -1);
+
+        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
+        binding.rcvBackground.setAdapter(adapter);
+        binding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void bindView() {
         binding.icHold.setImageResource(isHold ? R.drawable.ic_select : R.drawable.ic_n_select);
-        binding.icTouch.setImageResource(isHold ? R.drawable.ic_select : R.drawable.ic_n_select);
+        binding.icTouch.setImageResource(isTouch ? R.drawable.ic_select : R.drawable.ic_n_select);
 
         binding.icTouch.setOnClickListener(v -> {
             isHold = false;
@@ -118,8 +126,22 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
             if (isTouch) {
                 if (isSound) {
                     playSound();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+
+                    }, 500);
                 } else {
                     playSoundNoVolumn();
+                    new Handler().postDelayed(() -> {
+                        stopSound();
+                        stopFlash();
+                        stopVibrate();
+                        binding.ctlFunction.setVisibility(View.VISIBLE);
+
+                    }, 500);
                 }
                 if (isVibrate){
                     startVibrate();
@@ -166,45 +188,21 @@ public class ChainsawActivity extends BaseActivity<ActivityPlaySoundChainsawBind
         binding.ivBack.setOnClickListener(v -> onBack());
 
         binding.ivBackground.setOnClickListener(v -> {
-            if (!isShow) {
-                dialogBackground();
-            }
+            binding.view.setVisibility(View.VISIBLE);
+            binding.ctlBackground.setVisibility(View.VISIBLE);
+        });
+        binding.close.setOnClickListener(v -> {
+            binding.ctlBackground.setVisibility(View.GONE);
+            binding.view.setVisibility(View.GONE);
+        });
+        binding.view.setOnClickListener(v -> {
+            binding.ctlBackground.setVisibility(View.GONE);
+            binding.view.setVisibility(View.GONE);
         });
 
     }
     List<BackgroundModel> backgroundList;
     int background;
-
-    private void dialogBackground() {
-        isShow = true;
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        DialogBackgroundBinding dialogBinding = DialogBackgroundBinding.inflate(getLayoutInflater());
-        dialog.setContentView(dialogBinding.getRoot());
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG_CHAINSAW, 4);
-
-        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
-        dialogBinding.rcvBackground.setAdapter(adapter);
-        dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
-        dialogBinding.ivBack.setOnClickListener(v -> {
-            dialog.dismiss();
-            isShow = false;
-        });
-
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-            isShow = false;
-        }
-        dialog.setOnDismissListener(dialog1 -> isShow = false);
-        dialog.show();
-
-    }
 
     @NonNull
     private BackgroundAdapter getBackgroundAdapter(int currentBackground) {

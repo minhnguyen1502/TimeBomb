@@ -33,17 +33,16 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
 
     @Override
     public void initView() {
+
         initData();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         LanguageStartAdapter languageStartAdapter = new LanguageStartAdapter(listLanguage, code -> codeLang = code, this);
-
         binding.rcvLangStart.setLayoutManager(linearLayoutManager);
         binding.rcvLangStart.setAdapter(languageStartAdapter);
-    }
 
-    @Override
-    public void bindView() {
+//        languageStartAdapter.setCheck(SystemUtil.getPreLanguage(getBaseContext()));
+
         binding.ivCheck.setOnClickListener(view -> {
 
             if (codeLang.isEmpty()) {
@@ -55,6 +54,10 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
                 finishAffinity();
             }
         });
+    }
+
+    @Override
+    public void bindView() {
 
     }
 
@@ -62,8 +65,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
     public void onBack() {
         finishAffinity();
     }
-    boolean isDeviceLangInList = false;
-    @SuppressLint("SuspiciousIndentation")
+
     private void initData() {
         listLanguage = new ArrayList<>();
         listLanguage.add(new LanguageModel("English", "en"));
@@ -75,15 +77,10 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
         listLanguage.add(new LanguageModel("Portuguese", "pt"));
         listLanguage.add(new LanguageModel("Spanish", "es"));
 
-        // Lấy mã ngôn ngữ của thiết bị
         String deviceLanguageCode = Locale.getDefault().getLanguage();
-        // Lấy ngôn ngữ đã được lưu trước đó
         String previousLanguageCode = SystemUtil.getPreLanguage(getBaseContext());
-        // Kiểm tra số lần mở app
         if (SharePrefUtils.getCountOpenApp(this) > 1 && !previousLanguageCode.isEmpty()) {
-            // Lần tiếp theo: Sắp xếp danh sách theo thứ tự bảng chữ cái
-            Collections.sort(listLanguage, (lang1, lang2) -> lang1.getName().compareToIgnoreCase(lang2.getName()));
-            // Đẩy ngôn ngữ đã chọn trước đó lên đầu
+//            Collections.sort(listLanguage, (lang1, lang2) -> lang1.getName().compareToIgnoreCase(lang2.getName()));
             for (int i = 0; i < listLanguage.size(); i++) {
                 if (listLanguage.get(i).getCode().equals(previousLanguageCode)) {
                     LanguageModel selectedLanguage = listLanguage.remove(i);
@@ -91,24 +88,27 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
                     break;
                 }
             }
-        } else
+        } else {
+            boolean isDeviceLangInList = false;
+            for (int i = 0; i < listLanguage.size(); i++) {
+                if (listLanguage.get(i).getCode().equals(deviceLanguageCode)) {
+                    LanguageModel deviceLanguage = listLanguage.remove(i);
+                    listLanguage.add(0, deviceLanguage);
+                    isDeviceLangInList = true;
+                    break;
+                }
+            }
+            if (!isDeviceLangInList) {
+                for (int i = 0; i < listLanguage.size(); i++) {
+                    if (listLanguage.get(i).getCode().equals("en")) {
+                        LanguageModel englishLanguage = listLanguage.remove(i);
+                        listLanguage.add(0, englishLanguage);
+                        break;
+                    }
+                }
+            }
+        }
 
-        for (int i = 0; i < listLanguage.size(); i++) {
-            if (listLanguage.get(i).getCode().equals(deviceLanguageCode)) {
-                LanguageModel deviceLanguage = listLanguage.remove(i);
-                listLanguage.add(0, deviceLanguage);
-                isDeviceLangInList = true;
-                break;
-            }
-        }
-        for (int i = 0; i < listLanguage.size(); i++) {
-            if (listLanguage.get(i).getCode().equals("en")) {
-                LanguageModel englishLanguage = listLanguage.remove(i);
-                listLanguage.add(0, englishLanguage);
-                break;
-            }
-        }
     }
+
 }
-
-
