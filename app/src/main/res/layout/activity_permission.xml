@@ -133,13 +133,30 @@
         android:layout_marginHorizontal="16dp"
         android:includeFontPadding="false"
         android:text="@string/continues"
-        android:layout_marginBottom="230dp"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:fontFamily="@font/inter_semi_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nativePermission"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+    <RelativeLayout
+        android:id="@+id/nativePermission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <FrameLayout
+            android:id="@+id/fr_ads_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_native_load_large_above" />
+        </FrameLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

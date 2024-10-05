@@ -19,7 +19,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.viewbinding.ViewBinding;
 
+import com.ads.sapp.admob.AppOpenManager;
+import com.ads.sapp.util.CheckAds;
 import com.example.timebomb.R;
+import com.example.timebomb.ads.ConstantRemote;
 import com.example.timebomb.ui.intro.IntroActivity;
 import com.example.timebomb.util.SharePrefUtils;
 import com.example.timebomb.util.SystemUtil;
@@ -75,12 +78,7 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
 
         if (!(this instanceof IntroActivity)) {
             // Padding bottom with the value of status bar
-            binding.getRoot().setPadding(
-                    binding.getRoot().getPaddingLeft(),
-                    binding.getRoot().getPaddingTop() + getStatusBarHeight(),
-                    binding.getRoot().getPaddingRight(),
-                    binding.getRoot().getPaddingBottom()
-            );
+            binding.getRoot().setPadding(binding.getRoot().getPaddingLeft(), binding.getRoot().getPaddingTop() + getStatusBarHeight(), binding.getRoot().getPaddingRight(), binding.getRoot().getPaddingBottom());
         }
 
         hideNavigation();
@@ -128,6 +126,11 @@ public abstract class BaseActivity<VB extends ViewBinding> extends AppCompatActi
     protected void onResume() {
         super.onResume();
         //tắt ads resume all
+        if (ConstantRemote.appopen_resume && CheckAds.getInstance().isShowAds(this)) {
+            AppOpenManager.getInstance().enableAppResumeWithActivity(getClass());
+        } else {
+            AppOpenManager.getInstance().disableAppResumeWithActivity(getClass());
+        }
     }
 
     public void hideNavigation() {

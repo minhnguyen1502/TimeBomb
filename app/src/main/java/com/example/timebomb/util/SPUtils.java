@@ -15,6 +15,7 @@ public class SPUtils {
     public static final String BG_FLAME = "BG_FLAME";
     public static final String BG_SABER = "BG_SABER";
     public static final String BG_TASER = "BG_TASER";
+    public static final String CLICK = "CLICK";
 
 
     public static SharedPreferences getPref(Context context) {
