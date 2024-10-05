@@ -18,6 +18,7 @@ import com.example.timebomb.databinding.ActivitySplashBinding;
 import com.example.timebomb.ui.intro.IntroActivity;
 import com.example.timebomb.ui.language.LanguageStartActivity;
 import com.example.timebomb.ui.sound.service.CrackScreen;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SharePrefUtils;
 import com.example.timebomb.util.Utils;
 
@@ -35,6 +36,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this,"splash_open");
         binding.background.setBackgroundResource(R.drawable.bg_home);
         SharePrefUtils.increaseCountOpenApp(this);
 

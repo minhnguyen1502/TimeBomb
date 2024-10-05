@@ -12,6 +12,7 @@ import com.example.timebomb.ui.sound.adapter.SaberAdapter;
 import com.example.timebomb.ui.sound.adapter.SoundAdapter;
 import com.example.timebomb.ui.sound.model.Saber;
 import com.example.timebomb.ui.sound.model.SoundModel;
+import com.example.timebomb.util.EventTracking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,15 +41,53 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
         if (type != null) {
             switch (type) {
                 case "bomb":
+                    EventTracking.logEvent(this, "time_bomb_view");
+
                     binding.title.setText(getString(R.string.time_bomb));
                     binding.rcvSound.setAdapter(new SoundAdapter(bomb, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, BombActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "time_bomb_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "time_bomb_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "time_bomb_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "time_bomb_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "time_bomb_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "time_bomb_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "time_bomb_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "time_bomb_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
                 case "taser":
+                    EventTracking.logEvent(this, "teaser_gun_view");
+
                     binding.title.setText(getString(R.string.taser_gun));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(taser, this, (position, soundModel) -> {
@@ -56,30 +95,138 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                         i1.putExtra("position", position);
                         i1.putExtra("img", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "teaser_gun_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "teaser_gun_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "teaser_gun_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "teaser_gun_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "teaser_gun_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "teaser_gun_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "teaser_gun_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "teaser_gun_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
                 case "chainsaw":
+                    EventTracking.logEvent(this, "chainsaw_view");
+
                     binding.title.setText(getString(R.string.chainsaw));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(chainsaw, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, ChainsawActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "chainsaw_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "chainsaw_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "chainsaw_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "chainsaw_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "chainsaw_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "chainsaw_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "chainsaw_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "chainsaw_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
                 case "flame":
+                    EventTracking.logEvent(this, "flamethrower_view");
+
                     binding.title.setText(getString(R.string.flamethrower));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(flame, this, (position, soundModel) -> {
                         Intent i1 = new Intent(this, FlameActivity.class);
                         i1.putExtra("img", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "flamethrower_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "flamethrower_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "flamethrower_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "flamethrower_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "flamethrower_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "flamethrower_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "flamethrower_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "flamethrower_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
                 case "crack":
+                    EventTracking.logEvent(this, "crackscreen_view");
+
                     binding.title.setText(getString(R.string.crack_screen));
 
                     binding.rcvSound.setAdapter(new SoundAdapter(screen, this, (position, soundModel) -> {
@@ -87,10 +234,46 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                         i1.putExtra("img", soundModel.getImg());
                         i1.putExtra("screen", soundModel.getImg_play());
                         i1.putExtra("sound", soundModel.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "crackscreen_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "crackscreen_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "crackscreen_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "crackscreen_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "crackscreen_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "crackscreen_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "crackscreen_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "crackscreen_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
                 case "saber":
+                    EventTracking.logEvent(this, "light_saber_view");
+
                     binding.title.setText(getString(R.string.light_saber));
 
                     binding.rcvSound.setAdapter(new SaberAdapter(saber, this, (position, saber) -> {
@@ -98,6 +281,40 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
                         i1.putExtra("img_1", saber.getImg_play_1());
                         i1.putExtra("img_2", saber.getImg_play_2());
                         i1.putExtra("sound", saber.getSound());
+                        switch (position) {
+                            case 0:
+                                EventTracking.logEvent(this, "light_saber_1_click");
+
+                                break;
+                            case 1:
+                                EventTracking.logEvent(this, "light_saber_2_click");
+
+                                break;
+                            case 2:
+                                EventTracking.logEvent(this, "light_saber_3_click");
+
+                                break;
+                            case 3:
+                                EventTracking.logEvent(this, "light_saber_4_click");
+
+                                break;
+                            case 4:
+                                EventTracking.logEvent(this, "light_saber_5_click");
+
+                                break;
+                            case 5:
+                                EventTracking.logEvent(this, "light_saber_6_click");
+
+                                break;
+                            case 6:
+                                EventTracking.logEvent(this, "light_saber_7_click");
+
+                                break;
+                            default:
+                                EventTracking.logEvent(this, "light_saber_8_click");
+
+                                break;
+                        }
                         startActivity(i1);
                     }));
                     break;
@@ -109,7 +326,42 @@ public class SoundActivity extends BaseActivity<ActivitySoundBinding> {
             Toast.makeText(this, getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
         }
 
-        binding.ivBack.setOnClickListener(v -> onBack());
+        binding.ivBack.setOnClickListener(v -> {
+            if (type != null) {
+                switch (type) {
+                    case "bomb":
+                        EventTracking.logEvent(this, "time_bomb_back_click");
+
+                        break;
+                    case "taser":
+                        EventTracking.logEvent(this, "teaser_gun_back_click");
+
+                        break;
+                    case "chainsaw":
+                        EventTracking.logEvent(this, "chainsaw_back_click");
+
+                        break;
+                    case "flame":
+                        EventTracking.logEvent(this, "flamethrower_back_click");
+
+                        break;
+                    case "crack":
+                        EventTracking.logEvent(this, "crackscreen_back_click");
+
+                        break;
+                    case "saber":
+                        EventTracking.logEvent(this, "light_saber_back_click");
+
+                        break;
+                        default:
+                        Toast.makeText(this, getString(R.string.invalid_type), Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
+            }
+            onBack();
+        });
 
     }
 

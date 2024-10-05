@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.example.timebomb.R;
 import com.example.timebomb.base.BaseDialog;
 import com.example.timebomb.databinding.DialogRatingAppBinding;
+import com.example.timebomb.util.EventTracking;
 
 
 public class RatingDialog extends BaseDialog<DialogRatingAppBinding> {
@@ -28,6 +29,8 @@ public class RatingDialog extends BaseDialog<DialogRatingAppBinding> {
 
     @Override
     protected void initView() {
+        binding.rtb.setRating(5.0f);
+
         binding.rtb.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             String getRating = String.valueOf(binding.rtb.getRating());
             switch (getRating) {
@@ -72,9 +75,14 @@ public class RatingDialog extends BaseDialog<DialogRatingAppBinding> {
                 binding.imgIcon.setVisibility(View.VISIBLE);
                 iClickDialogRate.rate();
             }
+            EventTracking.logEvent(context, "rate_submit", "rate_star - ", "" + binding.rtb.getRating());
+
         });
 
-        binding.btnNotNow.setOnClickListener(view -> iClickDialogRate.later());
+        binding.btnNotNow.setOnClickListener(view -> {
+            EventTracking.logEvent(context, "rate_not_now");
+            iClickDialogRate.later();
+        });
     }
 
     public void init(IClickDialogRate iClickDialogRate) {

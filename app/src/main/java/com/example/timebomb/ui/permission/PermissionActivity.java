@@ -24,6 +24,7 @@ import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityPermissionBinding;
 import com.example.timebomb.databinding.DialogPermissionBinding;
 import com.example.timebomb.ui.main.MainActivity;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SPUtils;
 
 public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> {
@@ -36,6 +37,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this, "permission_open");
 
     }
     public boolean checkOverlayPermission() {
@@ -93,6 +95,7 @@ public class PermissionActivity extends BaseActivity<ActivityPermissionBinding> 
     @Override
     public void bindView() {
         binding.tvContinue.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "permission_continue_view");
 
             startNextActivity(MainActivity.class, null);
             finishAffinity();

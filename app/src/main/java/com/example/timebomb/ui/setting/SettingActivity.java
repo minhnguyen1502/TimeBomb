@@ -12,6 +12,7 @@ import com.example.timebomb.databinding.ActivitySettingBinding;
 import com.example.timebomb.dialog.rate.IClickDialogRate;
 import com.example.timebomb.dialog.rate.RatingDialog;
 import com.example.timebomb.ui.language.LanguageActivity;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SPUtils;
 import com.example.timebomb.util.SharePrefUtils;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +31,11 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this, "setting_view");
+        if (SharePrefUtils.isRated(this)) {
+            binding.btnRate.setVisibility(View.GONE);
+
+        }
         isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE,true);
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND,true);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH,true);
@@ -74,11 +80,27 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
             }
         });
 
-        binding.btnAbout.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
-        binding.btnLanguage.setOnClickListener(v -> startActivity(new Intent(this, LanguageActivity.class)));
-        binding.btnRate.setOnClickListener(v -> rate());
-        binding.btnShare.setOnClickListener(v -> share());
-        binding.ivBack.setOnClickListener(v -> onBack());
+        binding.btnAbout.setOnClickListener(v -> {
+
+            EventTracking.logEvent(this, "setting_about_click");
+            startActivity(new Intent(this, AboutActivity.class));
+        });
+        binding.btnLanguage.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "setting_language_click");
+            startActivity(new Intent(this, LanguageActivity.class));
+        });
+        binding.btnRate.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "setting_rate_click");
+            rate();
+        });
+        binding.btnShare.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "setting_share_click");
+            share();
+        });
+        binding.ivBack.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "teaser_gun_play_play_click");
+            onBack();
+        });
     }
     private void share() {
         Intent intentShare = new Intent(Intent.ACTION_SEND);
@@ -92,6 +114,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
     ReviewManager manager;
 
     private void rate() {
+        EventTracking.logEvent(SettingActivity.this, "rate_show");
 
         RatingDialog ratingDialog = new RatingDialog(SettingActivity.this, true);
         ratingDialog.init(new IClickDialogRate() {
@@ -144,8 +167,19 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding> {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SharePrefUtils.isRated(this)) {
+            binding.btnRate.setVisibility(View.GONE);
+
+        }
+    }
+
     @Override
     public void onBack() {
+
         finish();
     }
 }

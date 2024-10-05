@@ -27,6 +27,8 @@ import com.example.timebomb.ui.main.adapter.ItemAdapter;
 import com.example.timebomb.ui.main.model.ItemModel;
 import com.example.timebomb.ui.setting.SettingActivity;
 import com.example.timebomb.ui.sound.SoundActivity;
+import com.example.timebomb.util.EventTracking;
+import com.example.timebomb.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this, "home_view");
+        Utils.setFirstOpenApp(false);
+
         binding.recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
         listItems = new ArrayList<>();
@@ -57,21 +62,33 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         adapter = new ItemAdapter(listItems, position -> {
             switch (position){
                 case 0:
+                    EventTracking.logEvent(this, "home_time_bomb_click");
+
                     clickItem("bomb");
                     break;
                 case 1:
+                    EventTracking.logEvent(this, "home_taser_gun_click");
+
                     clickItem("taser");
                     break;
                 case 2:
+                    EventTracking.logEvent(this, "home_light_saber_click");
+
                     clickItem("saber");
                     break;
                 case 3:
+                    EventTracking.logEvent(this, "home_chain_saw_click");
+
                     clickItem("chainsaw");
                     break;
                 case 4:
+                    EventTracking.logEvent(this, "home_flame_thrower_click");
+
                     clickItem("flame");
                     break;
                 case 5:
+                    EventTracking.logEvent(this, "home_crack_screen_click");
+
                     if (checkOverlayPermission()) {
                         clickItem("crack");
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "66013300829",
+    "project_id": "catdogtranslator",
+    "storage_bucket": "catdogtranslator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66013300829:android:7192e3c9be40f721e5e5b4",
+        "android_client_info": {
+          "package_name": "com.catdogtranslator.petsounds.dogwhistle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5rUGIRaFjmoWCIaj4LrEcuvgtWcNCWuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66013300829:android:6757f670cffddbaee5e5b4",
+        "android_client_info": {
+          "package_name": "com.example.timebomb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5rUGIRaFjmoWCIaj4LrEcuvgtWcNCWuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

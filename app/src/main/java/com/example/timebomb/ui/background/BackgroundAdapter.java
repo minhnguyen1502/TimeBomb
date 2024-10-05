@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.timebomb.databinding.ItemBackgroundBinding;
 import com.example.timebomb.databinding.ItemSoundBinding;
 import com.example.timebomb.ui.sound.adapter.SoundAdapter;
@@ -42,7 +43,10 @@ public class BackgroundAdapter extends RecyclerView.Adapter<BackgroundAdapter.Ba
     @Override
     public void onBindViewHolder(@NonNull BackgroundHolder holder, @SuppressLint("RecyclerView") int position) {
         BackgroundModel backgroundModel = backgroundList.get(position);
-        holder.binding.img.setImageResource(backgroundModel.getImg());
+//        holder.binding.img.setImageResource(backgroundModel.getImg());
+        Glide.with(context)
+                .load(backgroundList.get(position).getImg())
+                .into(holder.binding.img);
         if (selectedPosition == position) {
             holder.binding.choose.setVisibility(View.VISIBLE);
         } else {

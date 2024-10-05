@@ -12,6 +12,7 @@ import com.example.timebomb.databinding.ActivityLanguageStartBinding;
 import com.example.timebomb.ui.intro.IntroActivity;
 import com.example.timebomb.ui.language.adapter.LanguageStartAdapter;
 import com.example.timebomb.ui.language.model.LanguageModel;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SharePrefUtils;
 import com.example.timebomb.util.SystemUtil;
 import com.example.timebomb.util.Utils;
@@ -33,7 +34,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
 
     @Override
     public void initView() {
-
+        EventTracking.logEvent(this, "language_fo_open");
         initData();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -44,6 +45,7 @@ public class LanguageStartActivity extends BaseActivity<ActivityLanguageStartBin
 //        languageStartAdapter.setCheck(SystemUtil.getPreLanguage(getBaseContext()));
 
         binding.ivCheck.setOnClickListener(view -> {
+            EventTracking.logEvent(this, "language_fo_save_click");
 
             if (codeLang.isEmpty()) {
                 Toast.makeText(LanguageStartActivity.this, R.string.please_choose_your_language, Toast.LENGTH_SHORT).show();

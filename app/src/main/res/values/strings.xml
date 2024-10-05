@@ -81,5 +81,6 @@
     <string name="something_wrong">Something Wrong</string>
     <string name="invalid_type">Invalid type</string>
     <string name="please_choose_your_language">please choose your language</string>
+    <string name="this_device_does_not_have_a_sensor">This device does not have a sensor.</string>
 
 </resources>

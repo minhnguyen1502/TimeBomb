@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.timebomb.R;
 import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityPlaySoundTimeBombBinding;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SPUtils;
 
 import pl.droidsonroids.gif.GifDrawable;
@@ -40,6 +41,7 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this, "time_bomb_time_view");
         currentTimeInSeconds = 5;
         minutes = currentTimeInSeconds / 60;
         seconds = currentTimeInSeconds % 60;
@@ -65,11 +67,28 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
 
     @Override
     public void bindView() {
-        binding.btnPlus.setOnClickListener(v -> increaseTime());
-        binding.btnMinus.setOnClickListener(v -> decreaseTime());
-        binding.btnStart.setOnClickListener(v -> startCountdown(currentTimeInSeconds+1));
-        binding.ivBack.setOnClickListener(v -> onBack());
+        binding.btnPlus.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "time_bomb_time_turn_up_click");
+
+            increaseTime();
+        });
+        binding.btnMinus.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "time_bomb_time_turn_down_click");
+
+            decreaseTime();
+        });
+        binding.btnStart.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "time_bomb_time_start_click");
+
+            startCountdown(currentTimeInSeconds+1);
+        });
+        binding.ivBack.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "time_bomb_back_click");
+            onBack();
+        });
         binding.gif.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "time_bomb_play_back_click");
+
             if (!isBom){
                 binding.gif.setVisibility(View.GONE);
             }
@@ -165,6 +184,8 @@ public class BombActivity extends BaseActivity<ActivityPlaySoundTimeBombBinding>
     }
 
     private void bomb() {
+        EventTracking.logEvent(this, "time_bomb_play_view");
+
         isBom = true;
         binding.gif.setVisibility(View.VISIBLE);
         try {

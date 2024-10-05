@@ -1,15 +1,12 @@
 package com.example.timebomb.ui.intro;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.timebomb.R;
@@ -17,7 +14,8 @@ import com.example.timebomb.base.BaseActivity;
 import com.example.timebomb.databinding.ActivityIntroBinding;
 import com.example.timebomb.ui.main.MainActivity;
 import com.example.timebomb.ui.permission.PermissionActivity;
-import com.example.timebomb.util.SharePrefUtils;
+import com.example.timebomb.util.EventTracking;
+import com.example.timebomb.util.Utils;
 
 public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     ImageView[] dots = null;
@@ -63,13 +61,15 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     public void bindView() {
         binding.btnNext.setOnClickListener(view -> {
             if (viewPager.getCurrentItem() == 0) {
+                EventTracking.logEvent(IntroActivity.this, "Intro1_next_click");
             } else if (viewPager.getCurrentItem() == 1) {
+                EventTracking.logEvent(IntroActivity.this, "Intro2_next_click");
             }
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
         });
 
         binding.btnStart.setOnClickListener(view -> {
-
+            EventTracking.logEvent(IntroActivity.this, "Intro3_next_click");
             goToNextScreen();
         });
     }
@@ -88,14 +88,17 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
         switch (position) {
             case 0:
+                EventTracking.logEvent(this, "Intro1_view");
 
                 binding.viewBottom.setGravity(Gravity.CENTER);
             case 1:
+                EventTracking.logEvent(this, "Intro2_view");
 
                 binding.btnNext.setVisibility(View.VISIBLE);
                 binding.btnStart.setVisibility(View.GONE);
                 break;
             case 2:
+                EventTracking.logEvent(this, "Intro3_view");
 
                 binding.btnNext.setVisibility(View.GONE);
                 binding.btnStart.setVisibility(View.VISIBLE);
@@ -104,15 +107,16 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     }
 
     public void goToNextScreen() {
-//        if(checkOverlayPermission()){
-//            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        } else {
+        if(!Utils.isFirstOpenApp()){
+            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
             Intent intent = new Intent(IntroActivity.this, PermissionActivity.class);
             startActivity(intent);
 
-//        }
+        }
     }
 
     public boolean checkOverlayPermission() {

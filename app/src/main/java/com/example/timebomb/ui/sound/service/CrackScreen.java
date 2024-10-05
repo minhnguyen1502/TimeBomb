@@ -8,13 +8,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -29,19 +28,23 @@ import com.example.timebomb.util.SPUtils;
 public class CrackScreen extends Service {
     private static final int NOTIFICATION_ID = 1;
     private static final String CHANNEL_ID = "CrackScreenChannel";
+    WindowManager windowManager2;
 
     private ImageView mImage;
-    private View overlayView;
     private int imageResId;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
     private boolean isSound, isVibrate;
+
+    WindowManager.LayoutParams params;
+    View view;
 
     @Override
     public IBinder onBind(Intent paramIntent) {
         return null;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -55,25 +58,42 @@ public class CrackScreen extends Service {
             }
         }
 
-        // Create the overlay view
-        mImage = new ImageView(this);
-        mImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        view = layoutInflater.inflate(R.layout.brokenwindow, null);
 
-        overlayView = new View(this);
-        overlayView.setBackgroundColor(0x00000000);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            this.params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    2002, 56, 1);
+        } else {
+            this.params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    2038, 56, 1);
+        }
+        params.x = 0;
+        params.y = 0;
+        params.alpha = 0.8f;
 
-        WindowManager.LayoutParams paramsOverlay = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
+        this.mImage = view.findViewById(R.id.brokenwindow);
 
-        paramsOverlay.gravity = Gravity.TOP | Gravity.LEFT;
-
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        windowManager.addView(overlayView, paramsOverlay);
+        windowManager2 = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        windowManager2.addView(view, params);
         mediaPlayer = MediaPlayer.create(this, R.raw.crack_screen);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        overlayView.setOnClickListener(v -> showCrackEffect());
 
-        // Start the service as a foreground service
+        if (isSound) {
+            if (mediaPlayer != null) {
+                mediaPlayer.start();
+            }
+        }
+        if (isVibrate) {
+            if (vibrator != null) {
+                vibrator.vibrate(500);
+            }
+        }
+
         startForegroundService();
+
     }
 
     @SuppressLint("ForegroundServiceType")
@@ -90,7 +110,9 @@ public class CrackScreen extends Service {
         RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.noti);
 
         Intent stopIntent = new Intent(this, StopReceiver.class);
-        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, stopIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
 
         notificationLayout.setOnClickPendingIntent(R.id.btn_stop, stopPendingIntent);
 
@@ -103,39 +125,22 @@ public class CrackScreen extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         imageResId = intent.getIntExtra("image_resource", R.drawable.img_screen_1);
+        mImage.setBackgroundResource(imageResId);
+
         return START_STICKY;
-    }
-
-    private void showCrackEffect() {
-        mImage.setImageResource(imageResId);
-        WindowManager.LayoutParams paramsImage = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, PixelFormat.TRANSLUCENT);
-
-        paramsImage.gravity = Gravity.CENTER;
-
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        windowManager.addView(mImage, paramsImage);
-        if (isSound) {
-            if (mediaPlayer != null) {
-                mediaPlayer.start();
-            }
-        }
-        if (isVibrate) {
-            if (vibrator != null) {
-                vibrator.vibrate(500);
-            }
-        }
-
-        Toast.makeText(this, "vibrate: "+isVibrate, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "sound: "+isSound, Toast.LENGTH_SHORT).show();
-        overlayView.setVisibility(View.GONE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        if (mImage != null) windowManager.removeView(mImage);
-        if (overlayView != null) windowManager.removeView(overlayView);
+        if (windowManager2 != null) {
+            this.windowManager2.removeView(view);
+            windowManager2 = null;
+        } else {
+            windowManager2 = (WindowManager) getSystemService(WINDOW_SERVICE);
+            windowManager2.removeView(view);
+            windowManager2 = null;
+        }
         if (mediaPlayer != null) mediaPlayer.release();
     }
 }

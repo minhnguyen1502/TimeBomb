@@ -8,12 +8,14 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -30,13 +32,14 @@ import com.example.timebomb.databinding.ActivityPlaySoundLightSaberBinding;
 import com.example.timebomb.databinding.DialogBackgroundBinding;
 import com.example.timebomb.ui.background.BackgroundAdapter;
 import com.example.timebomb.ui.background.BackgroundModel;
+import com.example.timebomb.util.EventTracking;
 import com.example.timebomb.util.SPUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBinding>{
+public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBinding> {
 
     private MediaPlayer mediaPlayer;
     private boolean isHold = true;
@@ -54,6 +57,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
 
     @Override
     public void initView() {
+        EventTracking.logEvent(this, "light_saber_play_view");
         isVibrate = SPUtils.getBoolean(this, SPUtils.IS_VIBRATE, true);
         isSound = SPUtils.getBoolean(this, SPUtils.IS_SOUND, true);
         isFlash = SPUtils.getBoolean(this, SPUtils.IS_FLASH, true);
@@ -78,7 +82,6 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             mediaPlayer.setOnCompletionListener(mp -> {
                 stopVibrate();
                 stopFlash();
-                binding.img1.setVisibility(View.INVISIBLE);
                 binding.ctlFunction.setVisibility(View.VISIBLE);
 
             });
@@ -97,11 +100,6 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         backgroundList.add(new BackgroundModel(R.drawable.bg_09));
         backgroundList.add(new BackgroundModel(R.drawable.bg_10));
         backgroundList.add(new BackgroundModel(R.drawable.bg_11));
-        int currentBackground = SPUtils.getInt(this, SPUtils.BG_SABER, -1);
-
-        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
-        binding.rcvBackground.setAdapter(adapter);
-        binding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -111,28 +109,28 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         binding.icTouch.setImageResource(isTouch ? R.drawable.ic_select : R.drawable.ic_n_select);
 
         binding.icTouch.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "light_saber_play_touch_click");
+
             isHold = false;
             binding.icHold.setImageResource(R.drawable.ic_n_select);
-            isTouch = !isTouch;
-            if (isTouch) {
-                binding.icTouch.setImageResource(R.drawable.ic_select);
-            } else {
-                binding.icTouch.setImageResource(R.drawable.ic_n_select);
-            }
+            isTouch = true;
+            binding.img1.setVisibility(View.INVISIBLE);
+            binding.icTouch.setImageResource(R.drawable.ic_select);
         });
 
         binding.icHold.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "light_saber_play_hold_click");
+
             binding.icTouch.setImageResource(R.drawable.ic_n_select);
             isTouch = false;
-            isHold = !isHold;
-            if (isHold) {
-                binding.icHold.setImageResource(R.drawable.ic_select);
-            } else {
-                binding.icHold.setImageResource(R.drawable.ic_n_select);
-            }
+            isHold = true;
+            binding.img1.setVisibility(View.INVISIBLE);
+            binding.icHold.setImageResource(R.drawable.ic_select);
         });
 
         binding.img2.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "light_saber_play_play_click");
+
             if (isTouch) {
                 if (isSound) {
                     playSound();
@@ -141,7 +139,6 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         stopFlash();
                         stopVibrate();
                         binding.ctlFunction.setVisibility(View.VISIBLE);
-                        binding.img1.setVisibility(View.INVISIBLE);
 
                     }, 500);
                 } else {
@@ -151,7 +148,6 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         stopFlash();
                         stopVibrate();
                         binding.ctlFunction.setVisibility(View.VISIBLE);
-                        binding.img1.setVisibility(View.INVISIBLE);
 
                     }, 500);
                 }
@@ -169,7 +165,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                 int fullHeight = binding.img1.getHeight();
 
                 ValueAnimator animator = ValueAnimator.ofInt(0, fullHeight);
-                animator.setDuration(2000);
+                animator.setDuration(500);
                 animator.setInterpolator(new DecelerateInterpolator());
 
                 animator.addUpdateListener(animation -> {
@@ -182,6 +178,8 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         });
 
         binding.img2.setOnTouchListener((v, event) -> {
+            EventTracking.logEvent(this, "light_saber_play_play_click");
+
             if (isHold) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -190,10 +188,10 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         } else {
                             playSoundNoVolumn();
                         }
-                        if (isVibrate){
+                        if (isVibrate) {
                             startVibrate();
                         }
-                        if (isFlash){
+                        if (isFlash) {
                             startFlash();
                         }
                         binding.ivBack.setClickable(false);
@@ -203,7 +201,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
                         binding.img1.setClipBounds(new Rect(0, 0, binding.img1.getWidth(), binding.img1.getHeight()));
                         int fullHeight = binding.img1.getHeight();
                         ValueAnimator animator = ValueAnimator.ofInt(0, fullHeight);
-                        animator.setDuration(2000);
+                        animator.setDuration(500);
                         animator.setInterpolator(new DecelerateInterpolator());
                         animator.addUpdateListener(animation -> {
                             int currentHeight = (int) animation.getAnimatedValue();
@@ -226,20 +224,50 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             return false;
         });
 
-        binding.ivBack.setOnClickListener(v -> onBack());
+        binding.ivBack.setOnClickListener(v -> {
+            EventTracking.logEvent(this, "light_saber_play_back_click");
+
+            onBack();
+        });
 
         binding.ivBackground.setOnClickListener(v -> {
-            binding.view.setVisibility(View.VISIBLE);
-            binding.ctlBackground.setVisibility(View.VISIBLE);
+            EventTracking.logEvent(this, "light_saber_play_background_click");
+
+            if (!isShow) {
+                dialogBackground();
+            }
         });
-        binding.close.setOnClickListener(v -> {
-            binding.ctlBackground.setVisibility(View.GONE);
-            binding.view.setVisibility(View.GONE);
+    }
+
+    private void dialogBackground() {
+        isShow = true;
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        DialogBackgroundBinding dialogBinding = DialogBackgroundBinding.inflate(getLayoutInflater());
+        dialog.setContentView(dialogBinding.getRoot());
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        int currentBackground = SPUtils.getInt(this, SPUtils.BG_SABER, 3);
+
+        BackgroundAdapter adapter = getBackgroundAdapter(currentBackground);
+        dialogBinding.rcvBackground.setAdapter(adapter);
+        dialogBinding.rcvBackground.setLayoutManager(new GridLayoutManager(this, 2));
+        dialogBinding.ivBack.setOnClickListener(v -> {
+            dialog.dismiss();
+            isShow = false;
         });
-        binding.view.setOnClickListener(v -> {
-            binding.ctlBackground.setVisibility(View.GONE);
-            binding.view.setVisibility(View.GONE);
-        });
+
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+            isShow = false;
+        }
+        dialog.setOnDismissListener(dialog1 -> isShow = false);
+        dialog.show();
+
     }
 
     @NonNull
@@ -252,7 +280,9 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             }
         }
 
-        return new BackgroundAdapter(this, backgroundList,selectedPosition, (position, backgroundModel) -> {
+        return new BackgroundAdapter(this, backgroundList, selectedPosition, (position, backgroundModel) -> {
+            EventTracking.logEvent(this, "light_saber_play_background_item_click");
+
             binding.background.setBackgroundResource(backgroundModel.getImg());
             SPUtils.setInt(this, SPUtils.BG_SABER, backgroundModel.getImg());
         });
@@ -265,6 +295,7 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
         binding.ctlFunction.setVisibility(View.GONE);
 
     }
+
     private void playSoundNoVolumn() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
@@ -300,22 +331,34 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
             }
         }
     }
+
     private boolean isBlinking = false;
     private CameraManager cameraManager;
     private String cameraId;
+
     private void toggleFlashlight(boolean turnOn) {
         try {
             if (cameraManager == null) {
                 cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-                cameraId = cameraManager.getCameraIdList()[0];
+                for (String id : cameraManager.getCameraIdList()) {
+                    CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(id);
+                    Boolean hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+                    if (hasFlash != null && hasFlash) {
+                        cameraId = id;
+                        break;
+                    }
+                }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (cameraId != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 cameraManager.setTorchMode(cameraId, turnOn);
+            } else {
+                Log.e("Flashlight", "No camera with flashlight found or SDK version too low");
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
+
     private void startFlash() {
         isBlinking = true;
         new Thread(() -> {
@@ -363,13 +406,13 @@ public class SaberActivity extends BaseActivity<ActivityPlaySoundLightSaberBindi
     protected void onResume() {
         super.onResume();
         if (mediaPlayer != null && wasPlaying) {
-            if (isSound){
+            if (isSound) {
                 mediaPlayer.start();
             }
             if (isVibrate) {
                 startVibrate();
             }
-            if (isFlash){
+            if (isFlash) {
                 startFlash();
             }
         }
